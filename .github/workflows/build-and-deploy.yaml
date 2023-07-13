@@ -1,31 +1,56 @@
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
 
 jobs:
-    build:
-        name: Build
-        runs-on: ubuntu-latest
+  build:
+    name: Build
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-            - name: Install node
-              uses: actions/setup-node@v3
-              with:
-                  version: 18.x
+      - name: Install node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
 
-            - name: Install dependencies
-              run: yarn install
+      - name: Install dependencies
+        run: yarn install
 
-            - name: Build project
-              run: yarn run build
+      - name: Build project
+        run: yarn run build
 
-            - name: Upload artifacts
-              uses: actions/upload-artifact@v3
-              with:
-                  name: production-files
-                  path: ./dist
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: github-pages
+          path: ./dist
 
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+
+#    steps:
+#      - name: Download artifacts
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: github-pages
+#          path: ./dist
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: https://github.com/tomoben/au2-ex1
+
+    steps:
+      - name: Deploy to gh pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+        with:
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
