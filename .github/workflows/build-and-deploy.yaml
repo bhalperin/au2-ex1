@@ -1,0 +1,31 @@
+on:
+    push:
+        branches:
+            -	main
+
+jobs:
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Install node
+              uses: actions/setup-node@v3
+              with:
+                  version: 18.x
+
+            - name: Install dependencies
+              run: yarn install
+
+            - name: Build project
+              run: yarn run build
+
+            - name: Upload artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                  name: production-files
+                  path: ./dist
+
