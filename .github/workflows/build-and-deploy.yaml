@@ -51,19 +51,4 @@ jobs:
           branch: main
           folder: ./dist
           repository-name: tomoben/au2-ex1
-          target-folder: ./Docs
-#    permissions:
-#      pages: write
-#      id-token: write
-
-#    environment:
-#      name: github-pages
-#      url: https://github.com/tomoben/au2-ex1
-
-#    steps:
-#      - name: Deploy to gh pages
-#        id: deployment
-#        uses: actions/deploy-pages@v2
-#        with:
-#          token: ${{ secrets.GH_ACCESS_TOKEN }}
-
+          target-folder: ./docs
