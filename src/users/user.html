@@ -19,7 +19,7 @@
 				<h5 class="card-title user-name">${user.name} <i class="fa fa-id-badge icon" title="Click to flip card and show user's avatar" click.trigger="flipUser()"></i></h5>
 				<div class="card-text user-location" show.bind="user.location">${user.location}</div>
 				<div class="card-text user-bio" show.bind="user.bio">${user.bio}</div>
-				<div class="card-text user-blog" show.bind="user.blog"><a href="${user.blog}" target="_blank">${user.blog}</a></div>
+				<div class="card-text user-blog" show.bind="user.blog"><a title="${user.blog}" href="${user.blog}" target="_blank" external>Blog</a></div>
 			</div>
 		</div>
 	</div>
