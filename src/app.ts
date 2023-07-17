@@ -1,20 +1,18 @@
-import { About } from './about/about';
-import { Users } from './users/users';
-import { Weather } from './weather/weather';
+import { IRoute } from '@aurelia/router';
 
 export class App {
 	static routes = [
 		{
 			path: ['', 'about'],
-			component: About
+			component: () => import('./about/about')
 		},
 		{
 			path: 'users',
-			component: Users
+			component: () => import('./users/users')
 		},
 		{
 			path: 'weather',
-			component: Weather
+			component: () => import('./weather/weather')
 		}
-	];
+	] as IRoute[];
 }
