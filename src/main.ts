@@ -20,8 +20,7 @@ const mapsPluginOptions = {
 Aurelia
 	.register(
 		RouterConfiguration.customize({
-			basePath: '/au2-ex1',
-			useUrlFragmentHash: true
+			basePath: '/au2-ex1'
 		}),
 		SharedElements,
 		Utils
