@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -17,6 +18,8 @@ const postcssLoader = {
 
 module.exports = function (env, { analyze }) {
 	const production = env.production || process.env.NODE_ENV === 'production';
+	const ASSET_PATH = process.env.ASSET_PATH || '/';
+
 	return {
 		target: 'web',
 		mode: production ? 'production' : 'development',
@@ -26,7 +29,8 @@ module.exports = function (env, { analyze }) {
 		},
 		output: {
 			path: path.resolve(__dirname, 'dist'),
-			filename: production ? '[name].[contenthash].bundle.js' : '[name].bundle.js'
+			filename: production ? '[name].[contenthash].bundle.js' : '[name].bundle.js',
+			publicPath: ASSET_PATH
 		},
 		resolve: {
 			extensions: ['.ts', '.js'],
@@ -116,7 +120,10 @@ module.exports = function (env, { analyze }) {
 			new Dotenv({
 				path: `./.env${production ? '' : '.' + (process.env.NODE_ENV || 'development')}`,
 			}),
-			analyze && new BundleAnalyzerPlugin()
+			analyze && new BundleAnalyzerPlugin(),
+			new webpack.DefinePlugin({
+				'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
+			})
 		].filter(p => p)
 	}
 }
