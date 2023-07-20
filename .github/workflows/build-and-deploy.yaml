@@ -22,6 +22,8 @@ jobs:
 
       - name: Build project
         run: yarn run build
+        env:
+          ASSET_PATH: /au2-ex1
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
