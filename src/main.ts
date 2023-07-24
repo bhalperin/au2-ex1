@@ -21,7 +21,6 @@ const basePath = process.env.ASSET_PATH ? `${process.env.ASSET_PATH}/` : '';
 Aurelia
 	.register(
 		RouterConfiguration.customize({
-			useUrlFragmentHash: true,
 			basePath
 		}),
 		SharedElements,
