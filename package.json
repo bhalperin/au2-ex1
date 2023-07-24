@@ -8,15 +8,15 @@
 	},
 	"license": "UNLICENSED",
 	"dependencies": {
-		"@aurelia/router": "2.0.0-beta.7",
-		"aurelia": "2.0.0-beta.7",
+		"@aurelia/router": "2.0.0-beta.8",
+		"aurelia": "2.0.0-beta.8",
 		"aurelia2-google-maps": "^0.0.17",
 		"font-awesome": "^4.7.0"
 	},
 	"devDependencies": {
-		"@aurelia/testing": "2.0.0-beta.7",
-		"@aurelia/ts-jest": "2.0.0-beta.7",
-		"@aurelia/webpack-loader": "2.0.0-beta.7",
+		"@aurelia/testing": "2.0.0-beta.8",
+		"@aurelia/ts-jest": "2.0.0-beta.8",
+		"@aurelia/webpack-loader": "2.0.0-beta.8",
 		"@types/jest": "^29.5.3",
 		"@types/node": "^20.4.4",
 		"@typescript-eslint/eslint-plugin": "^6.1.0",
