@@ -4,7 +4,7 @@ import { UserData } from './users-data';
 
 @inject(EventAggregator, Rest)
 export class Users {
-	public users;
+	public users = [];
 	public selectedUser: UserData;
 	private firstUser = 0;
 	private lastUser = 0;
