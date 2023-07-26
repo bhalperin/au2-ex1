@@ -122,7 +122,7 @@ module.exports = function (env, { analyze }) {
 			}),
 			analyze && new BundleAnalyzerPlugin(),
 			new webpack.DefinePlugin({
-				'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
+				'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH)
 			})
 		].filter(p => p)
 	}
