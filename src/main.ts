@@ -16,7 +16,7 @@ const mapsPluginOptions = {
 		zoom: 12
 	} // see https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapOptions
 };
-const basePath = process.env.ASSET_PATH ? `${process.env.ASSET_PATH}` : '';
+const basePath = process.env.ASSET_PATH ?? '';
 
 Aurelia
 	.register(
