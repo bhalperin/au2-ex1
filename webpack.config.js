@@ -18,7 +18,8 @@ const postcssLoader = {
 
 module.exports = function (env, { analyze }) {
 	const production = env.production || process.env.NODE_ENV === 'production';
-	const ASSET_PATH = `${process.env.ASSET_PATH || ''}/`;
+	// const ASSET_PATH = `${process.env.ASSET_PATH || ''}/`;
+	const ASSET_PATH = process.env.ASSET_PATH || '';
 
 	return {
 		target: 'web',
