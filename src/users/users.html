@@ -13,14 +13,14 @@
 	</div>
 	<div class="row">
 		<div class="col-4 col-md-3 col-lg-2" repeat.for="user of users">
-			<user user.bind="user"></user>
+			<user user-list-item.bind="user"></user>
 		</div>
 	</div>
-	<div class="row" if.bind="selectedUser">
+	<div class="row" if.bind="!!selectedUser">
 		<div class="col-sm-4">
 			<div class="selected-user">
 				<div class="avatar-box">
-					<img class="avatar" src="${selectedUser.avatarUrl}" alt="">
+					<img class="avatar" src.bind="selectedUser.avatar_url" alt="">
 				</div>
 			</div>
 		</div>
@@ -28,7 +28,7 @@
 			<div class="user-name" show.bind="selectedUser.name">${selectedUser.name}</div>
 			<div class="user-location" show.bind="selectedUser.location">${selectedUser.location}</div>
 			<div class="user-bio" show.bind="selectedUser.bio">${selectedUser.bio}</div>
-			<div class="user-blog" show.bind="selectedUser.blog"><a href="${selectedUser.blog}" target="_blank">${selectedUser.blog}</a></div>
+			<div class="user-blog" show.bind="selectedUser.blog"><a href.bind="selectedUser.blog" target="_blank">${selectedUser.blog}</a></div>
 		</div>
 	</div>
 </div>

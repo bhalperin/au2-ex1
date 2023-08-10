@@ -1,11 +1,11 @@
 import { EventAggregator, inject } from 'aurelia';
 import { Rest } from '../util/rest';
-import { UserData } from './users-data';
+import { UserData, UserListItemData } from './users-data';
 
 @inject(EventAggregator, Rest)
 export class Users {
-	public users = [];
-	public selectedUser: UserData;
+	public users = [] as UserListItemData[];
+	public selectedUser: UserListItemData;
 	private firstUser = 0;
 	private lastUser = 0;
 
@@ -28,20 +28,11 @@ export class Users {
 	public async getUsers(): Promise<void> {
 		const response = await this.rest.getUsers(`?since=${this.lastUser}`);
 
-		this.users = response.map(u => {
-			return {
-				avatarUrl: u.avatar_url,
-				bio: u.bio,
-				blog: u.blog,
-				id: u.id,
-				location: u.location,
-				login: u.login,
-				name: u.name
-			};
-		});
+		this.users = response;
 		if (this.users.length) {
 			this.firstUser = this.users[0].id;
 			this.lastUser = this.users[this.users.length - 1].id;
+			// this.selectedUser = this.users[0];
 		}
 	}
 

@@ -1,10 +1,11 @@
 import { bindable, EventAggregator, inject } from 'aurelia';
 import { Rest } from '../util/rest';
-import { UserData } from './users-data';
+import { UserData, UserListItemData } from './users-data';
 
 @inject(EventAggregator, Rest)
 export class User {
-	@bindable public user: UserData;
+	@bindable public userListItem: UserListItemData;
+	user: UserData;
 	private cardPanel: Element;
 	private isUserRetrieved = false;
 	private readonly FLIPPED_CLASS: string = 'is-flipped';
@@ -36,18 +37,7 @@ export class User {
 			return;
 		}
 
-		const user = await this.rest.getUser(userLogin);
-
-		this.user = {
-			avatarUrl: user.avatar_url,
-			bio: user.bio ?? '',
-			blog: user.blog,
-			id: user.id,
-			location: user.location,
-			login: user.login,
-			name: user.name
-		} as UserData;
-		// this.publish(this.user);
+		this.user = await this.rest.getUser(userLogin);
 		this.isUserRetrieved = true;
 	}
 

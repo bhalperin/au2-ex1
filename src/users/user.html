@@ -3,18 +3,18 @@
 <!-- <div class="user-box" click.trigger="getUser(user.login)">
 	<div class="login">${user.login}</div>
 	<div class="avatar-box">
-		<img class="avatar" src="${user.avatarUrl}" alt="">
+		<img class="avatar" src="${user.avatar_url}" alt="">
 	</div>
 </div> -->
 <div class="scene">
 	<div element.ref="cardPanel" class="card-panel">
 		<div class="card">
-			<img src="${user.avatarUrl}" alt="Avatar" class="card-img-top">
+			<img src="${userListItem.avatar_url}" alt="Avatar" class="card-img-top">
 			<div class="card-body">
-				<h5 class="card-title">${user.login} <i class="fa fa-file-text icon" title="Click to flip card and show user's bio" click.trigger="getUser(user.login)"></i></h5>
+				<h5 class="card-title">${userListItem.login} <i class="fa fa-file-text icon" title="Click to flip card and show user's bio" click.trigger="getUser(userListItem.login)"></i></h5>
 			</div>
 		</div>
-		<div class="card back">
+		<div class="card back" if.bind="!!user">
 			<div class="card-body">
 				<h5 class="card-title user-name">${user.name} <i class="fa fa-id-badge icon" title="Click to flip card and show user's avatar" click.trigger="flipUser()"></i></h5>
 				<div class="card-text user-location" show.bind="user.location">${user.location}</div>

@@ -1,5 +1,6 @@
 import { HttpClient } from '@aurelia/fetch-client';
 import { inject } from '@aurelia/kernel';
+import { UserData, UserListItemData } from '../users/users-data';
 
 @inject(HttpClient)
 export class Rest {
@@ -7,13 +8,13 @@ export class Rest {
 		http.configure(config => config.useStandardConfiguration());
 	}
 
-	public async getUsers(url: string): Promise<any[]> {
+	public async getUsers(url: string): Promise<UserListItemData[]> {
 		this.http.baseUrl = 'https://api.github.com/users';
 
 		return this.http.fetch(url).then(response => response.json());
 	}
 
-	public async getUser(user: string): Promise<any> {
+	public async getUser(user: string): Promise<UserData> {
 		this.http.baseUrl = 'https://api.github.com/users/';
 
 		return this.http.fetch(user).then(response => response.json());
