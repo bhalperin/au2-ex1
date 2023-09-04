@@ -11,15 +11,15 @@
 		<div class="card">
 			<img src="${userListItem.avatar_url}" alt="Avatar" class="card-img-top">
 			<div class="card-body">
-				<h5 class="card-title">${userListItem.login} <i class="fa fa-file-text icon" title="Click to flip card and show user's bio" click.trigger="getUser(userListItem.login)"></i></h5>
+				<h5 class="card-title">${userListItem.login} <i class="fa fa-file-text icon" data-bs-toggle="tooltip" data-bs-title="Click to flip card and show user's bio" click.trigger="flipClicked($event, true)"></i></h5>
 			</div>
 		</div>
 		<div class="card back" if.bind="!!user">
 			<div class="card-body">
-				<h5 class="card-title user-name">${user.name} <i class="fa fa-id-badge icon" title="Click to flip card and show user's avatar" click.trigger="flipUser()"></i></h5>
+				<h5 class="card-title user-name">${user.name} <i class="fa fa-id-badge icon" data-bs-toggle="tooltip" data-bs-title="Click to flip card and show user's avatar" click.trigger="flipClicked($event, false)"></i></h5>
 				<div class="card-text user-location" show.bind="user.location">${user.location}</div>
 				<div class="card-text user-bio" show.bind="user.bio">${user.bio}</div>
-				<div class="card-text user-blog" show.bind="user.blog"><a title="${user.blog}" href="${user.blog}" target="_blank" external>Blog</a></div>
+				<div class="card-text user-blog" show.bind="user.blog"><a data-bs-toggle="tooltip" data-bs-title="${user.blog}" href="${user.blog}" target="_blank" external>Blog</a></div>
 			</div>
 		</div>
 	</div>
