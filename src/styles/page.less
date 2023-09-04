@@ -13,13 +13,27 @@ body.au {
 			grid-auto-flow: column;
 			justify-content: start;
 			padding: 8px 24px;
+			
+			a {
+				opacity: 0.6;
+				text-decoration: none;
+
+				&:hover {
+					opacity: 1;
+				}
+
+				&.active {
+					opacity: 1;
+					text-decoration: underline;
+				}
+			}
 		}
 
 		au-viewport {
 			background-color: rgba(255, 193, 7, 0.01);
 			border: 2px solid #eeeeee;
 			display: block;
-			margin: 24px;
+			margin: 0 24px;
 			overflow: auto;
 			padding: 24px;
 		}
