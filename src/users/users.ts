@@ -11,7 +11,7 @@ export class Users {
 
 	constructor(private ea: EventAggregator, private rest: Rest) { }
 
-	public created() {
+	public created(): void {
 		this.subscribe();
 	}
 
