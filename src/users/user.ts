@@ -53,6 +53,7 @@ export class User {
 	}
 
 	public async flipClicked(ev: MouseEvent, frontClicked: boolean): Promise<void> {
+		ev.stopPropagation();
 		bootstrap.Tooltip.getInstance(ev.target as HTMLElement).hide();
 
 		if (frontClicked) {

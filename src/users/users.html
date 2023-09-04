@@ -5,7 +5,7 @@
 	<div class="row header">
 		<div class="col-md-8">
 			<h4>
-				<span if.bind="firstUser > 0">Showing users ${firstUser} to ${lastUser}</span>
+				<span if.bind="firstUser > 0">Showing ${users.length} users (ID #${firstUser} to #${lastUser})</span>
 				<button class="btn btn-primary" click.trigger="getUsers()">Next</button>
 				<button class="btn btn-primary" click.trigger="flipUsersToFront()">Show All Faces</button>
 			</h4>

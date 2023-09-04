@@ -29,7 +29,7 @@
 		perspective: 600px;
 
 		.card-panel {
-			height: 340px;
+			height: 370px;
 			margin-bottom: 20px;
 			position: relative;
 			transform-style: preserve-3d;
@@ -40,6 +40,7 @@
 			&.is-flipped {
 				transform: rotateY(180deg);
 			}
+
 			.card {
 				backface-visibility: hidden;
 				border-radius: 4px;
@@ -65,19 +66,25 @@
 				}
 		
 				.card-body {
-					.card-title {
-						&.user-name {
-							margin-top: 20px;
-						}
-
-						.icon {
-							color: #5858c1;
-							cursor: pointer;
-						}
-					}
-
 					.card-text {
 						font-size: 80%;
+					}
+				}
+
+				.card-footer {
+					display: grid;
+					grid-auto-flow: column;
+					margin-bottom: 0;
+
+					.icon {
+						color: #5858c1;
+						cursor: pointer;
+						justify-self: start;
+					}
+
+					.user-id {
+						justify-self: end;
+						cursor: default;
 					}
 				}
 			}

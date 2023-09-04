@@ -11,16 +11,21 @@
 		<div class="card">
 			<img src="${userListItem.avatar_url}" alt="Avatar" class="card-img-top">
 			<div class="card-body">
-				<h5 class="card-title">${userListItem.login} <i class="fa fa-file-text icon" data-bs-toggle="tooltip" data-bs-title="Click to flip card and show user's bio" click.trigger="flipClicked($event, true)"></i></h5>
+				<h5 class="card-title">${userListItem.login}</h5>
 			</div>
+			<h5 class="card-footer">
+				<i class="fa fa-file-text icon card-link" data-bs-toggle="tooltip" data-bs-title="Click to flip card and show user's bio" click.trigger="flipClicked($event, true)"></i>
+				<span class="badge rounded-pill text-bg-dark user-id">${userListItem.id}</span>
+			</h5>
 		</div>
 		<div class="card back" if.bind="!!user">
 			<div class="card-body">
-				<h5 class="card-title user-name">${user.name} <i class="fa fa-id-badge icon" data-bs-toggle="tooltip" data-bs-title="Click to flip card and show user's avatar" click.trigger="flipClicked($event, false)"></i></h5>
-				<div class="card-text user-location" show.bind="user.location">${user.location}</div>
-				<div class="card-text user-bio" show.bind="user.bio">${user.bio}</div>
-				<div class="card-text user-blog" show.bind="user.blog"><a data-bs-toggle="tooltip" data-bs-title="${user.blog}" href="${user.blog}" target="_blank" external>Blog</a></div>
+				<h5 class="card-title user-name">${user.name}</h5>
+				<div class="card-text user-location" if.bind="user.location">${user.location}</div>
+				<div class="card-text user-bio" if.bind="user.bio">${user.bio}</div>
+				<div class="card-text user-blog" if.bind="user.blog"><a data-bs-toggle="tooltip" data-bs-title="${user.blog}" href="${user.blog}" target="_blank" external>Blog</a></div>
 			</div>
+			<h5 class="card-footer"><i class="fa fa-id-badge icon card-link" data-bs-toggle="tooltip" data-bs-title="Click to flip card and show user's avatar" click.trigger="flipClicked($event, false)"></i></h5>
 		</div>
 	</div>
 </div>
