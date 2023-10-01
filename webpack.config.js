@@ -99,6 +99,19 @@ module.exports = function (env, { analyze }) {
 					]
 				},
 				{
+					test: /\.scss$/i,
+					use: [
+						'style-loader',
+						cssLoader,
+						{
+							loader: 'sass-loader',
+							options: {
+								sourceMap: true
+							}
+						}
+					]
+				},
+				{
 					test: /\.ts$/i,
 					use: ['ts-loader', '@aurelia/webpack-loader'],
 					exclude: /node_modules/
