@@ -1,6 +1,6 @@
 import { HttpClient } from '@aurelia/fetch-client';
 import { inject } from '@aurelia/kernel';
-import { UserData, UserListItemData } from '../users/users-data';
+import { UserData, UserListItemData } from '../users/users.model';
 
 @inject(HttpClient)
 export class Rest {

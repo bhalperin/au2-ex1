@@ -1,7 +1,7 @@
 import { bindable, EventAggregator, inject } from 'aurelia';
 import * as bootstrap from 'bootstrap';
 import { Rest } from '../util/rest';
-import { UserData, UserListItemData } from './users-data';
+import { UserData, UserListItemData } from './users.model';
 
 @inject(EventAggregator, Rest)
 export class User {
