@@ -1,15 +1,16 @@
 <import from="../../styles/weather.scss"></import>
 
-<div class="-container-fluid current-weather" if.bind="currentWeather">
+<div if.bind="currentWeather" class="-container-fluid current-weather">
 	<div class="-row">
 		<div class="-col-xs-2">
-			<img class="current-weather-icon" src.bind="iconUrl" if.bind="currentWeather" />
+			<img class="current-weather-icon" src.bind="iconUrl" />
 		</div>
 	</div>
 	<div class="-row">
 		<div class="-col-xs-2">
-			<span class="temperature" if.bind="currentWeather">${temperature}</span><span class="temperature-units" if.bind="currentWeather"><sup>&deg;</sup></span>
-			<span class="weather-description" if.bind="currentWeather">${weatherDescription}</span>
+			<span class="temperature">${temperature}</span><span class="temperature-units"><sup>&deg;</sup></span>
+			<span class="weather-description">${weatherDescription}</span>
 		</div>
 	</div>
 </div>
+<div if.bind="error" class="current-weather error">${error}</div>

@@ -1,6 +1,7 @@
 import { HttpClient } from '@aurelia/fetch-client';
 import { inject } from '@aurelia/kernel';
 import { UserData, UserListItemData } from '../users/users.model';
+import { WeatherResponse } from '../weather/weather.model';
 
 @inject(HttpClient)
 export class Rest {
@@ -20,7 +21,7 @@ export class Rest {
 		return this.http.fetch(user).then(response => response.json());
 	}
 
-	public getWeatherCurrentGeosearch(key: string, params: string): Promise<Response> {
+	public getWeatherCurrentGeosearch(key: string, params: string): Promise<WeatherResponse> {
 		const url = `?key=${key}&city=${params}`;
 		this.http.baseUrl = 'http://api.weatherbit.io/v2.0/current';
 
@@ -31,11 +32,9 @@ export class Rest {
 				}
 				throw new Error('Invalid city');
 			})
-			.catch(error => {
+			.catch((error: Response) => {
 				console.error(error);
-				return {
-					error
-				};
+				throw new Error(error.statusText);
 			});
 	}
 

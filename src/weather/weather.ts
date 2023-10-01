@@ -1,6 +1,7 @@
 import { inject } from 'aurelia';
 import { MapOptions } from '../util/maps';
 import { Rest } from '../util/rest';
+import { WEATHER_API_KEY, WeatherBit, WeatherResponse } from './weather.model';
 
 @inject(Rest)
 export class Weather {
@@ -8,12 +9,9 @@ export class Weather {
 	public city = 'New York';
 	public cityToWeather: string;
 	public address: string;
-	public apiKey = 'AIzaSyBDpatbgT78e3gupI5NgbFsyoS7_P9fUcY';  // API key from https://www.weatherbit.io
-	public currentWeather;
+	public currentWeather: WeatherBit;
 	public error: string;
 	public iconUrl: string;
-	public weatherWidget;
-	public weatherWidget2;
 	public gmap;
 	public mapOptions: MapOptions = {
 		address: '',
@@ -43,46 +41,39 @@ export class Weather {
 	get weather(): string {
 		let valueToDisplay = 'City not found';
 
-		if (this.currentWeather && this.currentWeather.count) {
-			const data = this.currentWeather.data[0];
-
-			valueToDisplay = `${Math.round(data.temp).toString()} degrees. ${data.weather.description}`;
+		if (this.currentWeather) {
+			valueToDisplay = `${Math.round(this.currentWeather.temp).toString()} degrees. ${this.currentWeather.weather.description}`;
 		}
 
 		return valueToDisplay;
 	}
 
 	public submit() {
-		this.weatherWidget.getWeatherCurrentGeosearch();
-		this.weatherWidget2.getWeatherCurrentGeosearch();
+		this.currentWeather = null;
+		this.getWeatherCurrentGeosearch();
 		this.cityToWeather = this.city;
 
 		return false;
 	}
 
-	private getWeatherCurrentGeosearch(): void {
-		this.rest.getWeatherCurrentGeosearch(this.apiKey, this.city)
-			.then((response: any) => {
+	public getWeatherCurrentGeosearch(): void {
+		this.rest.getWeatherCurrentGeosearch(WEATHER_API_KEY, this.city)
+			.then((response: WeatherResponse) => {
 				if (!response) {
 					throw new Error('No response');
 				}
-				if (response.error) {
-					throw response.error;
-				}
-				this.currentWeather = response;
-				this.iconUrl = this.rest.getWeatherIconUrl(this.apiKey, this.currentWeather.data[0].weather.icon);
-
-				const newAddress = `${this.city}, ${this.currentWeather.data[0].country_code}`;
-
-				if (this.gmap.address !== newAddress) {
-					this.gmap.clearMarkers();
-				}
-				this.mapOptions.address = newAddress;
-				// console.log("Map:", newAddress);
+				setTimeout(() => {
+					this.currentWeather = response.data[0];
+					if (!this.currentWeather.temp) {
+						throw `${this.city} not found`;
+					}
+					this.iconUrl = this.rest.getWeatherIconUrl(WEATHER_API_KEY, this.currentWeather.weather.icon);
+					console.log('parent / currentWeather:', this.currentWeather);
+					console.log('parent / iconUrl:', this.iconUrl);
+				}, 5000);
 			})
-			.catch(error => {
-				this.currentWeather = null;
-				this.error = error;
+			.catch((error: Error) => {
+				this.error = error.message;
 			});
 	}
 }

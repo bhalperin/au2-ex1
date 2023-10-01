@@ -5,12 +5,12 @@
 	<div>
 		<form class="form-horizontal" role="form" submit.trigger="submit()">
 			<h2 class="bold ${myClass}">${heading}</h2>
-			<div class="form-group">
+			<div class="row form-group">
 				<label class="col-sm-1 control-label" for="">City:</label>
-				<div class="input-group col-sm-3">
-					<input type="text" class="form-control" value.bind="city" placeholder="City" />
-					<span class="input-group-btn">
-						<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+				<div class="input-group row col-sm-3">
+					<input type="text" class="form-control col" value.bind="city" placeholder="City" />
+					<span class="input-group-btn col">
+						<button type="submit" class="btn btn-outline-primary"><i class="fa fa-search"></i> Search</button>
 					</span>
 					<span class="no-data" show.bind="!currentWeather">${error}</span>
 				</div>
@@ -21,19 +21,14 @@
 			</div>
 		</form>
 		<div class="container-fluid">
-			<div class="row">
-				<span class="current-weather" if.bind="currentWeather">${weather}</span>
-				<img class="current-weather-icon" src.bind="iconUrl" if.bind="currentWeather" />
-			</div>
-			<div class="row">
-				<current-weather view-model.ref="weatherWidget" city.bind="cityToWeather"></current-weather>
-				<current-weather view-model.ref="weatherWidget2" city.bind="cityToWeather"></current-weather>
+			<div if.bind="currentWeather" class="row">
+				<current-weather city.bind="cityToWeather" current-weather.bind="currentWeather" icon-url.bind="iconUrl"></current-weather>
 			</div>
 		</div>
 	</div>
 </section>
 <section>
-	<!-- <google-map class="map-box" view-model.ref="gmap" address.bind="mapOptions.address" zoom.bind="mapOptions.zoom"></google-map> -->
+	<!-- <google-map class="map-box" component.ref="gmap" address.bind="mapOptions.address" zoom.bind="mapOptions.zoom"></google-map> -->
 	<!-- <google-map class="map-box" address.bind="mapOptions.address" zoom.bind="mapOptions.zoom"></google-map> -->
-	<google-map class="map-box" latitude.bind="mapOptions.lat" longitude.bind="mapOptions.lon" zoom.bind="mapOptions.zoom"></google-map>
+	<!-- <google-map class="map-box" latitude.bind="mapOptions.lat" longitude.bind="mapOptions.lon" zoom.bind="mapOptions.zoom"></google-map> -->
 </section>
