@@ -19,6 +19,7 @@
 		"@aurelia/testing": "2.0.0-beta.8",
 		"@aurelia/ts-jest": "2.0.0-beta.8",
 		"@aurelia/webpack-loader": "2.0.0-beta.8",
+		"@playwright/test": "^1.38.1",
 		"@types/bootstrap": "^5.2.7",
 		"@types/jest": "^29.5.5",
 		"@types/node": "^20.8.0",
@@ -73,6 +74,11 @@
 			"ts-jest": {
 				"isolatedModules": true
 			}
-		}
+		},
+		"testPathIgnorePatterns" : [
+			"<rootDir>/node_modules/",
+			"<rootDir>/e2e/",
+			"<rootDir>/tests-examples/"
+		]
 	}
 }

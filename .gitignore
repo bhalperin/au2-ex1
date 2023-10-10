@@ -34,3 +34,6 @@ node_modules
 /dist
 /.nyc_output
 /coverage
+/test-results/
+/playwright-report/
+/playwright/.cache/

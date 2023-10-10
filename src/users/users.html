@@ -1,11 +1,11 @@
 <import from="./user"></import>
 <import from="../styles/users.scss"></import>
 
-<div class="container-fluid users-view">
+<div class="container-fluid users-view" loading.class="isLoading">
 	<div class="row header">
 		<div class="col-md-8">
 			<h4>
-				<span if.bind="firstUser > 0">Showing ${users.length} users (ID #${firstUser} to #${lastUser})</span>
+				<span if.bind="firstUser > 0">Showing <span data-testid="usersInPage">${users.length}</span> users (ID #<span data-testid="firstUser">${firstUser}</span> to #<span data-testid="lastUser">${lastUser}</span>)</span>
 				<button class="btn btn-primary" click.trigger="getUsers()">Next</button>
 				<button class="btn btn-primary" click.trigger="flipUsersToFront()">Show All Faces</button>
 			</h4>

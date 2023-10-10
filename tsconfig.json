@@ -8,10 +8,15 @@
 		"esModuleInterop": true,
 		"resolveJsonModule": true,
 		"sourceMap": true,
-		"module": "ESNext"
+		"module": "ESNext",
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"]
+		}
 	},
 	"include": [
 		"test",
+		"e2e",
 		"src"
 	],
 	"files": [

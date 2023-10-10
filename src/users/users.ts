@@ -8,6 +8,7 @@ export class Users {
 	public selectedUser: UserListItemData;
 	private firstUser = 0;
 	private lastUser = 0;
+	private isLoading = true;
 
 	constructor(private ea: EventAggregator, private rest: Rest) { }
 
@@ -26,6 +27,8 @@ export class Users {
 	}
 
 	public async getUsers(): Promise<void> {
+		this.isLoading = true;
+
 		const response = await this.rest.getUsers(`?since=${this.lastUser}`);
 
 		this.users = response;
@@ -34,6 +37,8 @@ export class Users {
 			this.lastUser = this.users[this.users.length - 1].id;
 			// this.selectedUser = this.users[0];
 		}
+
+		this.isLoading = false;
 	}
 
 	public flipUsersToFront(): void {
