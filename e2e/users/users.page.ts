@@ -24,7 +24,8 @@ export class UsersPage {
 	}
 
 	async expectFirstUser(id: number): Promise<void> {
-		await this.page.waitForFunction(() => !document.querySelector('.loading'));
+		// await this.page.waitForFunction(() => !document.querySelector('.loading'));
+		while ((await this.page.locator('.loading').all()).length) { void(0); }
 
 		// const firstUserId = await this.firstUser.textContent({ timeout: 1000 });
 		const firstUserId = await this.firstUser.textContent();
