@@ -21,7 +21,6 @@ test('correct number of users in page', async ({ usersPage }) => {
 test('next button is visible', async ({ usersPage }) => {
 	// Expects "next" button to be visible
 	await usersPage.expectFirstUser(USERS_RESPONSE.firstPage[0].id);
-	// await expect(usersPage.nextButton).toBeVisible();
 });
 
 test('when clicking next button show correct id range', async ({ usersPage }) => {

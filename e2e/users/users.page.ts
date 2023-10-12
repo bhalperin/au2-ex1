@@ -20,14 +20,15 @@ export class UsersPage {
 	}
 
 	async clickNext(): Promise<void> {
-		await this.nextButton.click();
+		await Promise.all([
+			this.page.waitForResponse(response => response.url().includes('users?since')),
+			this.nextButton.click()
+		]);
 	}
 
 	async expectFirstUser(id: number): Promise<void> {
-		// await this.page.waitForFunction(() => !document.querySelector('.loading'));
-		while ((await this.page.locator('.loading').all()).length) { void(0); }
+		await this.page.waitForFunction(() => !document.querySelector('.loading'));
 
-		// const firstUserId = await this.firstUser.textContent({ timeout: 1000 });
 		const firstUserId = await this.firstUser.textContent();
 
 		await expect(firstUserId).toBe(`${id}`);
