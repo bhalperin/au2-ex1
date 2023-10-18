@@ -11,11 +11,11 @@
 			</h4>
 		</div>
 	</div>
-	<div class="row">
+	<section class="row" data-testid="usersSection">
 		<div class="col-4 col-md-3 col-lg-2" repeat.for="user of users">
-			<user user-list-item.bind="user"></user>
+			<user user-list-item.bind="user" data-testid="user-${user.id}"></user>
 		</div>
-	</div>
+	</section>
 	<div class="row" if.bind="!!selectedUser">
 		<div class="col-sm-4">
 			<div class="selected-user">

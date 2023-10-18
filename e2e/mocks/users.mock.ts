@@ -1,4 +1,4 @@
-import { UserData } from '@/users';
+import { UserData, UserListItemData } from '@/users';
 
 export const USERS_RESPONSE = {
 	firstPage: [
@@ -34,5 +34,13 @@ export const USERS_RESPONSE = {
 			"id": 6,
 			"avatar_url": "https://avatars.githubusercontent.com/u/6?v=4"
 		}
-	] as UserData[]
+	] as UserListItemData[]
 };
+
+export const USERS_DETAILS_RESPONSE = {
+	"mojombo": {
+		blog: "http://tom.preston-werner.com",
+		location: "San Francisco",
+		name: "Tom Preston-Werner"
+	} as UserData
+}

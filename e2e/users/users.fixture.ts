@@ -10,5 +10,3 @@ export const test = base.extend<UsersFixtures>({
 		await use(new UsersPage(page));
 	}
 });
-
-export { expect } from '@playwright/test';

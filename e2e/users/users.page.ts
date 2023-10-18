@@ -1,4 +1,5 @@
-import { Locator, Page, expect } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
+import { USERS_RESPONSE } from '../mocks/users.mock';
 
 export class UsersPage {
 	readonly page: Page;
@@ -16,6 +17,8 @@ export class UsersPage {
 	}
 
 	async goto(): Promise<void> {
+		await this.page.route('https://api.github.com/users?since=0', async route => route.fulfill({ json: USERS_RESPONSE.firstPage }));
+		await this.page.route('https://api.github.com/users?since=3', async route => route.fulfill({ json: USERS_RESPONSE.secondPage }));
 		await this.page.goto('http://localhost:9000/#/users');
 	}
 
@@ -26,12 +29,12 @@ export class UsersPage {
 		]);
 	}
 
-	async expectFirstUser(id: number): Promise<void> {
+	async firstUserId(): Promise<string> {
+		return await this.firstUser.textContent();
+	}
+
+	async waitForLoaded(): Promise<void> {
 		await this.page.waitForFunction(() => !document.querySelector('.loading'));
-
-		const firstUserId = await this.firstUser.textContent();
-
-		await expect(firstUserId).toBe(`${id}`);
 	}
 
 	async isLoading(): Promise<boolean> {
