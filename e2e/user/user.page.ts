@@ -27,8 +27,12 @@ export class UserPage {
 		return await this.firstUserCard.locator('.card .card-body .card-title').textContent();
 	}
 
-	async firstUserCardName(): Promise<string> {
-		return await this.firstUserCard.locator('.card.back .card-body .card-title.user-name').textContent();
+	firstUserCardName(): Locator {
+		return this.firstUserCard.locator('.card.back .card-body .card-title.user-name');
+	}
+
+	firstUserCardBlogLink(): Locator {
+		return this.firstUserCard.locator('.card.back .card-body .user-blog a');
 	}
 
 	async flipFirstUserCard(): Promise<void> {

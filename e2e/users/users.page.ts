@@ -29,10 +29,6 @@ export class UsersPage {
 		]);
 	}
 
-	async firstUserId(): Promise<string> {
-		return await this.firstUser.textContent();
-	}
-
 	async waitForLoaded(): Promise<void> {
 		await this.page.waitForFunction(() => !document.querySelector('.loading'));
 	}

@@ -20,7 +20,7 @@ test('when page loads show correct id range', async ({ usersPage }) => {
 	await usersPage.waitForLoaded();
 
 	// then
-	await expect(await usersPage.firstUserId()).toBe(`${USERS_RESPONSE.firstPage[0].id}`);
+	await expect(await usersPage.firstUser.textContent()).toBe(`${USERS_RESPONSE.firstPage[0].id}`);
 });
 
 test('when clicking next button show correct id range', async ({ usersPage }) => {
@@ -29,5 +29,5 @@ test('when clicking next button show correct id range', async ({ usersPage }) =>
 	await usersPage.waitForLoaded();
 
 	// then
-	await expect(await usersPage.firstUserId()).toBe(`${USERS_RESPONSE.secondPage[0].id}`);
+	await expect(await usersPage.firstUser.textContent()).toBe(`${USERS_RESPONSE.secondPage[0].id}`);
 });

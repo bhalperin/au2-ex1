@@ -39,8 +39,12 @@ export const USERS_RESPONSE = {
 
 export const USERS_DETAILS_RESPONSE = {
 	"mojombo": {
+		avatar_url: "https://avatars.githubusercontent.com/u/1?v=4",
+		bio: null,
 		blog: "http://tom.preston-werner.com",
+		id: 1,
 		location: "San Francisco",
+		login: "mojombo",
 		name: "Tom Preston-Werner"
-	} as UserData
-}
+	}
+} as Record<string, UserData>;
