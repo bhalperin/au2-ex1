@@ -1,5 +1,3 @@
-<import from="font-awesome/less/font-awesome.less"></import>
-
 <!-- <div class="user-box" click.trigger="getUser(user.login)">
 	<div class="login">${user.login}</div>
 	<div class="avatar-box">
@@ -14,7 +12,7 @@
 				<h5 class="card-title">${userListItem.login}</h5>
 			</div>
 			<h5 class="card-footer">
-				<i class="fa fa-file-text icon card-link" data-bs-toggle="tooltip" data-bs-title="Click to flip card and show user's bio" click.trigger="flipClicked($event, true)"></i>
+				<i class="fa-regular fa-file-text icon card-link" data-bs-toggle="tooltip" data-bs-title="Click to flip card and show user's bio" click.trigger="flipClicked($event, true)"></i>
 				<span class="badge rounded-pill text-bg-dark user-id">${userListItem.id}</span>
 			</h5>
 		</div>
@@ -25,7 +23,7 @@
 				<div class="card-text user-bio" if.bind="user.bio">${user.bio}</div>
 				<div class="card-text user-blog" if.bind="user.blog"><a data-bs-toggle="tooltip" data-bs-title="${user.blog}" href="${user.blog}" target="_blank" external>Blog</a></div>
 			</div>
-			<h5 class="card-footer"><i class="fa fa-id-badge icon card-link" data-bs-toggle="tooltip" data-bs-title="Click to flip card and show user's avatar" click.trigger="flipClicked($event, false)"></i></h5>
+			<h5 class="card-footer"><i class="fa-regular fa-id-badge icon card-link" data-bs-toggle="tooltip" data-bs-title="Click to flip card and show user's avatar" click.trigger="flipClicked($event, false)"></i></h5>
 		</div>
 	</div>
 </div>

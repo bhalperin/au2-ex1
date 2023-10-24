@@ -1,4 +1,3 @@
-<import from="font-awesome/less/font-awesome.less"></import>
 <import from="../styles/weather.scss"></import>
 
 <section class="au-animate">
@@ -10,7 +9,7 @@
 				<div class="input-group row col-sm-3">
 					<input type="text" class="form-control col" value.bind="city" placeholder="City" />
 					<span class="input-group-btn col">
-						<button type="submit" class="btn btn-outline-primary"><i class="fa fa-search"></i> Search</button>
+						<button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-search"></i> Search</button>
 					</span>
 					<span class="no-data" show.bind="!currentWeather">${error}</span>
 				</div>
