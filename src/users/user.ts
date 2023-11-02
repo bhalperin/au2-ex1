@@ -1,15 +1,17 @@
 import { bindable, EventAggregator, inject } from 'aurelia';
 import * as bootstrap from 'bootstrap';
 import { Rest } from '../util/rest';
-import { UserData, UserListItemData } from './users.model';
+import { UserData, UserListItemData, UserRepo } from './users.model';
 
 @inject(EventAggregator, Rest)
 export class User {
 	@bindable public userListItem: UserListItemData;
-	readonly #FLIPPED_CLASS: string = 'is-flipped';
+	readonly #FLIPPED_CLASS = 'is-flipped';
 	#isUserRetrieved = false;
 	user: UserData;
+	userRepos = [] as UserRepo[];
 	private cardPanel: HTMLElement;
+	private reposModal: HTMLElement;
 
 	constructor(private ea: EventAggregator, private rest: Rest) { }
 
@@ -18,6 +20,7 @@ export class User {
 			return;
 		}
 
+		console.log(this.userRepos);
 		this.user = await this.rest.getUser(this.userListItem.login);
 		this.#isUserRetrieved = true;
 	}
@@ -40,6 +43,12 @@ export class User {
 	public attached() {
 		this.#isUserRetrieved = false;
 		this.#enableTooltip();
+		this.reposModal.addEventListener('show.bs.modal', async (event) => {
+			if (!this.userRepos.length) {
+				this.userRepos = await this.rest.getAllUserRepos(this.userListItem.login);
+			}
+			console.log(event);
+		});
 	}
 
 	public subscribe(): void {

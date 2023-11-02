@@ -1,0 +1,21 @@
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h1 class="modal-title fs-5" id="reposModalLabel">Public repositories</h1>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<div if.bind="!repos?.length" class="d-flex justify-content-center">
+				<div class="spinner-border" role="status">
+					<span class="visually-hidden">Loading...</span>
+				</div>
+			</div>
+			<ul class="list-group list-group-flush">
+				<li repeat.for="repo of repos" class="list-group-item">${repo.name}</li>
+			</ul>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+		</div>
+	</div>
+</div>

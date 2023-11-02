@@ -1,3 +1,5 @@
+<import from="./user-repos"></import>
+
 <!-- <div class="user-box" click.trigger="getUser(user.login)">
 	<div class="login">${user.login}</div>
 	<div class="avatar-box">
@@ -9,21 +11,32 @@
 		<div class="card">
 			<img src="${userListItem.avatar_url}" alt="Avatar" class="card-img-top">
 			<div class="card-body">
-				<h5 class="card-title">${userListItem.login}</h5>
+				<h5 class="card-title">
+					${userListItem.login}
+					<a class="icon-link gh-link" href="${userListItem.html_url}" data-bs-toggle="tooltip" data-bs-title="User's Github page" target="_blank" external><i class="fa-brands fa-github"></i></a>
+				</h5>
 			</div>
 			<h5 class="card-footer">
-				<i class="fa-regular fa-file-text icon card-link" data-bs-toggle="tooltip" data-bs-title="Click to flip card and show user's bio" click.trigger="flipClicked($event, true)"></i>
+				<i class="fa-regular fa-file-text icon card-link" data-bs-toggle="tooltip" data-bs-title="Flip card and show user's bio" data-testid="flipToBack" click.trigger="flipClicked($event, true)"></i>
 				<span class="badge rounded-pill text-bg-dark user-id">${userListItem.id}</span>
 			</h5>
 		</div>
-		<div class="card back" if.bind="!!user">
+		<div if.bind="!!user" class="card back">
 			<div class="card-body">
 				<h5 class="card-title user-name">${user.name}</h5>
-				<div class="card-text user-location" if.bind="user.location">${user.location}</div>
-				<div class="card-text user-bio" if.bind="user.bio">${user.bio}</div>
-				<div class="card-text user-blog" if.bind="user.blog"><a data-bs-toggle="tooltip" data-bs-title="${user.blog}" href="${user.blog}" target="_blank" external>Blog</a></div>
+				<div if.bind="user.location" class="card-text user-location">${user.location}</div>
+				<div if.bind="user.bio" class="card-text user-bio">${user.bio}</div>
+				<div if.bind="user.blog" class="card-text user-blog"><a data-bs-toggle="tooltip" data-bs-title="${user.blog}" href="${user.blog}" target="_blank" external>Blog</a></div>
+				<div if.bind="user.public_repos" class="card-text user-public-repos">
+					Public repositories:
+					<a href="" class="link-underline link-underline-opacity-0 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#reposModal-${userListItem.id}">${user.public_repos}</a>
+				</div>
 			</div>
-			<h5 class="card-footer"><i class="fa-regular fa-id-badge icon card-link" data-bs-toggle="tooltip" data-bs-title="Click to flip card and show user's avatar" click.trigger="flipClicked($event, false)"></i></h5>
+			<h5 class="card-footer"><i class="fa-regular fa-id-badge icon card-link" data-bs-toggle="tooltip" data-bs-title="Flip card and show user's avatar" data-testid="flipToFront" click.trigger="flipClicked($event, false)"></i></h5>
 		</div>
 	</div>
+</div>
+
+<div id="reposModal-${userListItem.id}" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" element.ref="reposModal" aria-labelledby="reposModalLabel" aria-hidden="true">
+	<user-repos if.bind="!!userRepos" repos.bind="userRepos"></user-repos>
 </div>

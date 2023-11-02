@@ -42,9 +42,11 @@ export const USERS_DETAILS_RESPONSE = {
 		avatar_url: "https://avatars.githubusercontent.com/u/1?v=4",
 		bio: null,
 		blog: "http://tom.preston-werner.com",
+		html_url: "https://github.com/mojombo",
 		id: 1,
 		location: "San Francisco",
 		login: "mojombo",
-		name: "Tom Preston-Werner"
+		name: "Tom Preston-Werner",
+		public_repos: 66
 	}
 } as Record<string, UserData>;

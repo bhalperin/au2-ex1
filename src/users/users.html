@@ -5,9 +5,9 @@
 	<div class="row header position-sticky top-0">
 		<div class="col-md-8">
 			<h4>
-				<span if.bind="firstUser > 0">Showing <span data-testid="usersInPage">${users.length}</span> users (ID #<span data-testid="firstUser">${firstUser}</span> to #<span data-testid="lastUser">${lastUser}</span>)</span>
+				<span if.bind="firstUser > 0">Showing <span data-testid="usersInPage">${users.length}</span> Github users (ID #<span data-testid="firstUser">${firstUser}</span> to #<span data-testid="lastUser">${lastUser}</span>)</span>
 				<button class="btn btn-primary" click.trigger="getUsers()">Next</button>
-				<button class="btn btn-primary" click.trigger="flipUsersToFront()">Show All Faces</button>
+				<button class="btn btn-primary" click.trigger="flipUsersToFront()">Show All Avatars</button>
 			</h4>
 		</div>
 	</div>

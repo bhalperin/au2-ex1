@@ -1,6 +1,6 @@
 import { HttpClient } from '@aurelia/fetch-client';
 import { inject } from '@aurelia/kernel';
-import { UserData, UserListItemData } from '../users/users.model';
+import { UserData, UserListItemData, UserRepo } from '../users/users.model';
 import { WeatherResponse } from '../weather/weather.model';
 
 @inject(HttpClient)
@@ -19,6 +19,30 @@ export class Rest {
 		this.http.baseUrl = 'https://api.github.com/users/';
 
 		return this.http.fetch(user).then(response => response.json());
+	}
+
+	public async getUserRepos(user: string, page = 1, pageSize = 100): Promise<UserRepo[]> {
+		this.http.baseUrl = 'https://api.github.com/users/';
+
+		return this.http.fetch(`${user}/repos?per_page=${pageSize}&page=${page}`).then(response => response.json());
+	}
+
+	public async getAllUserRepos(user: string): Promise<UserRepo[]> {
+		const allRepos = [] as UserRepo[];
+		let pageRepos = [] as UserRepo[];
+		let page = 1;
+
+		do {
+			pageRepos = await this.getUserRepos(user, page++);
+
+			if (pageRepos.length) {
+				allRepos.push(...pageRepos);
+				continue;
+			}
+			break;
+		} while (pageRepos.length);
+
+		return allRepos;
 	}
 
 	public getWeatherCurrentGeosearch(key: string, params: string): Promise<WeatherResponse> {

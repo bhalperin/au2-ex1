@@ -24,7 +24,7 @@ export class UserPage {
 	}
 
 	async firstUserCardLogin(): Promise<string> {
-		return await this.firstUserCard.locator('.card .card-body .card-title').textContent();
+		return (await this.firstUserCard.locator('.card .card-body .card-title').textContent()).trim();
 	}
 
 	firstUserCardName(): Locator {
@@ -43,7 +43,7 @@ export class UserPage {
 		const userCard = this.page.getByTestId(`user-${serial}`);
 		const responsePromise =  this.page.waitForResponse(response => response.url().includes('users/'));
 
-		await userCard.locator('i').click();
+		await userCard.getByTestId('flipToBack').click();
 		await responsePromise;
 	}
 
