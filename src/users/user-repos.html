@@ -1,7 +1,9 @@
+<import from="./repo-list-item"></import>
+
 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 	<div class="modal-content">
 		<div class="modal-header">
-			<h1 class="modal-title fs-5" id="reposModalLabel">Public repositories</h1>
+			<h1 class="modal-title fs-5" id="reposModalLabel">Public Repositories<span if.bind="repos?.length"> (${repos.length})</span></h1>
 			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		</div>
 		<div class="modal-body">
@@ -11,7 +13,9 @@
 				</div>
 			</div>
 			<ul class="list-group list-group-flush">
-				<li repeat.for="repo of repos" class="list-group-item">${repo.name}</li>
+				<li repeat.for="repo of repos" class="list-group-item">
+					<repo-list-item user.bind="user" repo.bind="repo"></repo-list-item>
+				</li>
 			</ul>
 		</div>
 		<div class="modal-footer">

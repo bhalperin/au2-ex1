@@ -36,16 +36,16 @@ export class User {
 		tooltipTriggerList.forEach(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 	}
 
-	public created() {
+	public created(): void {
 		this.subscribe();
 	}
 
-	public attached() {
+	public attached(): void {
 		this.#isUserRetrieved = false;
 		this.#enableTooltip();
 		this.reposModal.addEventListener('show.bs.modal', async (event) => {
 			if (!this.userRepos.length) {
-				this.userRepos = await this.rest.getAllUserRepos(this.userListItem.login);
+				this.userRepos = await this.rest.getAllUserRepos(this.user.login, this.user.public_repos);
 			}
 			console.log(event);
 		});

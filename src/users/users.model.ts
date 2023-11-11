@@ -19,5 +19,11 @@ export interface UserData {
 }
 
 export interface UserRepo {
+	id: number;
 	name: string;
+	html_url: string;
+	languages: string;
+	pushed_at: string;
 }
+
+export type RepoLanguages = Record<string, number>;

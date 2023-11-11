@@ -1,0 +1,16 @@
+<div class="container">
+	<div class="row">
+		<div class="col">
+			${repo.name}
+			<a class="icon-link gh-link" href="${repo.html_url}" data-bs-toggle="tooltip" data-bs-title="Repository page" target="_blank" external><i class="fa-brands fa-github"></i></a>
+		</div>
+		<div class="col-2 text-end">
+			<i role="button" class="fa-solid fa-chevron-down" data-bs-toggle="collapse" data-bs-target="#repo-${repo.id}"></i>
+		</div>
+	</div>
+</div>
+
+<div id="repo-${repo.id}" class="collapse repo-details" element.ref="collapse">
+	<span class="caption fw-semibold">Languages:</span>
+	<span class="value languages">${languages}</span>
+</div>

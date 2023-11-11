@@ -29,7 +29,10 @@
 				<div if.bind="user.blog" class="card-text user-blog"><a data-bs-toggle="tooltip" data-bs-title="${user.blog}" href="${user.blog}" target="_blank" external>Blog</a></div>
 				<div if.bind="user.public_repos" class="card-text user-public-repos">
 					Public repositories:
-					<a href="" class="link-underline link-underline-opacity-0 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#reposModal-${userListItem.id}">${user.public_repos}</a>
+					<span data-bs-toggle="tooltip" data-bs-title="Show list">
+						<a if.bind="user.public_repos" href="" class="link-underline link-underline-opacity-0 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#reposModal-${userListItem.id}">${user.public_repos}</a>
+					</span>
+					<span else>None</span>
 				</div>
 			</div>
 			<h5 class="card-footer"><i class="fa-regular fa-id-badge icon card-link" data-bs-toggle="tooltip" data-bs-title="Flip card and show user's avatar" data-testid="flipToFront" click.trigger="flipClicked($event, false)"></i></h5>
@@ -38,5 +41,5 @@
 </div>
 
 <div id="reposModal-${userListItem.id}" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" element.ref="reposModal" aria-labelledby="reposModalLabel" aria-hidden="true">
-	<user-repos if.bind="!!userRepos" repos.bind="userRepos"></user-repos>
+	<user-repos if.bind="!!userRepos" user.bind="user" repos.bind="userRepos"></user-repos>
 </div>

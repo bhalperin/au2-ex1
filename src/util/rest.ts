@@ -1,6 +1,6 @@
 import { HttpClient } from '@aurelia/fetch-client';
 import { inject } from '@aurelia/kernel';
-import { UserData, UserListItemData, UserRepo } from '../users/users.model';
+import { RepoLanguages, UserData, UserListItemData, UserRepo } from '../users/users.model';
 import { WeatherResponse } from '../weather/weather.model';
 
 @inject(HttpClient)
@@ -27,22 +27,27 @@ export class Rest {
 		return this.http.fetch(`${user}/repos?per_page=${pageSize}&page=${page}`).then(response => response.json());
 	}
 
-	public async getAllUserRepos(user: string): Promise<UserRepo[]> {
+	public async getAllUserRepos(user: string, repoCount: number): Promise<UserRepo[]> {
 		const allRepos = [] as UserRepo[];
 		let pageRepos = [] as UserRepo[];
 		let page = 1;
 
-		do {
+		while (allRepos.length < repoCount) {
 			pageRepos = await this.getUserRepos(user, page++);
 
-			if (pageRepos.length) {
-				allRepos.push(...pageRepos);
-				continue;
+			if (!pageRepos.length) {
+				break;
 			}
-			break;
-		} while (pageRepos.length);
+			allRepos.push(...pageRepos);
+		}
 
 		return allRepos;
+	}
+
+	public async getUserRepoLanguages(user: string, repo: string): Promise<RepoLanguages> {
+		this.http.baseUrl = 'https://api.github.com/repos/';
+
+		return this.http.fetch(`${user}/${repo}/languages`).then(response => response.json());
 	}
 
 	public getWeatherCurrentGeosearch(key: string, params: string): Promise<WeatherResponse> {

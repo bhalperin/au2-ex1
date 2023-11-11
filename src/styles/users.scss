@@ -98,6 +98,26 @@
 			}
 		}
 	}
+
+	.modal {
+		user-repos {
+			repo-list-item {
+				.container {
+					padding: 0;
+
+					.gh-link {
+						font-size: .8rem;
+						text-decoration: none;
+					}
+				}
+
+				.repo-details {
+					font-size: 0.8rem;
+					padding-top: 8px;
+				}
+			}
+		}
+	}
 	
 	.selected-user {
 		.avatar-box {
