@@ -23,7 +23,17 @@ export interface UserRepo {
 	name: string;
 	html_url: string;
 	languages: string;
+	owner: {
+		login: string;
+	}
 	pushed_at: string;
+}
+
+export interface RepoContributor {
+	avatar_url: string;
+	html_url: string;
+	id: number;
+	login: string;
 }
 
 export type RepoLanguages = Record<string, number>;

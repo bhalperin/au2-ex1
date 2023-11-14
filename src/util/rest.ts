@@ -1,6 +1,6 @@
 import { HttpClient } from '@aurelia/fetch-client';
 import { inject } from '@aurelia/kernel';
-import { RepoLanguages, UserData, UserListItemData, UserRepo } from '../users/users.model';
+import { RepoContributor, RepoLanguages, UserData, UserListItemData, UserRepo } from '../users/users.model';
 import { WeatherResponse } from '../weather/weather.model';
 
 @inject(HttpClient)
@@ -44,10 +44,16 @@ export class Rest {
 		return allRepos;
 	}
 
-	public async getUserRepoLanguages(user: string, repo: string): Promise<RepoLanguages> {
+	public async getRepoContributors(owner: string, repo: string): Promise<RepoContributor[]> {
 		this.http.baseUrl = 'https://api.github.com/repos/';
 
-		return this.http.fetch(`${user}/${repo}/languages`).then(response => response.json());
+		return this.http.fetch(`${owner}/${repo}/contributors`).then(response => response.json());
+	}
+
+	public async getRepoLanguages(owner: string, repo: string): Promise<RepoLanguages> {
+		this.http.baseUrl = 'https://api.github.com/repos/';
+
+		return this.http.fetch(`${owner}/${repo}/languages`).then(response => response.json());
 	}
 
 	public getWeatherCurrentGeosearch(key: string, params: string): Promise<WeatherResponse> {

@@ -102,7 +102,7 @@
 	.modal {
 		user-repos {
 			repo-list-item {
-				.container {
+				.top-container {
 					padding: 0;
 
 					.gh-link {
@@ -114,6 +114,24 @@
 				.repo-details {
 					font-size: 0.8rem;
 					padding-top: 8px;
+
+					.row {
+						padding: 4px 0;
+
+						.value {
+							&.contributors {
+								a {
+									text-decoration: none;
+								}
+							}
+
+							&.languages {
+								.progress:not(:first-of-type) {
+									margin-top: 4px;
+								}
+							}
+						}
+					}
 				}
 			}
 		}

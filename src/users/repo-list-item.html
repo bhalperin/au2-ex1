@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container top-container">
 	<div class="row">
 		<div class="col">
 			${repo.name}
@@ -11,6 +11,25 @@
 </div>
 
 <div id="repo-${repo.id}" class="collapse repo-details" element.ref="collapse">
-	<span class="caption fw-semibold">Languages:</span>
-	<span class="value languages">${languages}</span>
+	<div class="container">
+		<div class="row">
+			<div class="col-3"><span class="caption fw-semibold">Contributors (${contributors.length}):</span></div>
+			<div class="col">
+				<span class="value contributors">
+					<a repeat.for="contributor of contributors" last.class="$last" href="${contributor.html_url}" target="_blank" external>${contributor.login}<span if.bind="!$last" class="separator">, </span></a>
+				</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-3"><span class="caption fw-semibold">Languages:</span></div>
+			<!--<div class="col"><span class="value languages">${languages}</span></div>-->
+			<div class="col">
+				<div class="value languages">
+					<div repeat.for="language of sortedLanguages" class="progress bg-light" role="progressbar" aria-valuenow="${language[1]}" aria-valuemin="0" aria-valuemax="totalLanguages">
+						<div class="progress-bar bg-warning-subtle text-start overflow-visible text-black px-2" width.style="(100 * language[1] / totalLanguages).toFixed(2) + 'px'">${language[0]} (${(100 * language[1] / totalLanguages).toFixed(2)}%)</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
