@@ -24,7 +24,13 @@ export class Rest {
 	public async getUserRepos(user: string, page = 1, pageSize = 100): Promise<UserRepo[]> {
 		this.http.baseUrl = 'https://api.github.com/users/';
 
-		return this.http.fetch(`${user}/repos?per_page=${pageSize}&page=${page}`).then(response => response.json());
+		return this.http.fetch(`${user}/repos?per_page=${pageSize}&page=${page}`).then(async response => {
+			const repos = await response.json() as unknown as UserRepo[];
+
+			repos.forEach(repo => repo.pushed_at_date = new Date(repo.pushed_at));
+
+			return repos;
+		});
 	}
 
 	public async getAllUserRepos(user: string, repoCount: number): Promise<UserRepo[]> {
@@ -44,6 +50,12 @@ export class Rest {
 		return allRepos;
 	}
 
+	public async getRepo(owner: string, repo: string): Promise<UserRepo> {
+		this.http.baseUrl = 'https://api.github.com/repos/';
+
+		return this.http.fetch(`${owner}/${repo}`).then(response => response.json());
+	}
+
 	public async getRepoContributors(owner: string, repo: string): Promise<RepoContributor[]> {
 		this.http.baseUrl = 'https://api.github.com/repos/';
 
@@ -58,6 +70,7 @@ export class Rest {
 
 	public getWeatherCurrentGeosearch(key: string, params: string): Promise<WeatherResponse> {
 		const url = `?key=${key}&city=${params}`;
+
 		this.http.baseUrl = 'http://api.weatherbit.io/v2.0/current';
 
 		return this.http.fetch(url)

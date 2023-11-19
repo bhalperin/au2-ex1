@@ -105,9 +105,16 @@
 				.top-container {
 					padding: 0;
 
-					.gh-link {
-						font-size: .8rem;
-						text-decoration: none;
+					.last-commit {
+						font-size: 12px;
+					}
+
+					.collapse-trigger {
+						font-size: 12px;
+					}
+
+					.description {
+						font-size: 12px;
 					}
 				}
 
@@ -132,6 +139,11 @@
 							}
 						}
 					}
+				}
+
+				.gh-link {
+					font-size: .8rem;
+					text-decoration: none;
 				}
 			}
 		}

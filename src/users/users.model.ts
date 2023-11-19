@@ -19,14 +19,17 @@ export interface UserData {
 }
 
 export interface UserRepo {
+	description: string;
+	full_name: string;
 	id: number;
-	name: string;
 	html_url: string;
-	languages: string;
+	name: string;
 	owner: {
 		login: string;
 	}
+	parent?: UserRepo;
 	pushed_at: string;
+	pushed_at_date: Date;
 }
 
 export interface RepoContributor {

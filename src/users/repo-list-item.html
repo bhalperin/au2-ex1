@@ -4,14 +4,26 @@
 			${repo.name}
 			<a class="icon-link gh-link" href="${repo.html_url}" data-bs-toggle="tooltip" data-bs-title="Repository page" target="_blank" external><i class="fa-brands fa-github"></i></a>
 		</div>
-		<div class="col-2 text-end">
+		<div class="col-3 text-end text-secondary last-commit">
+			Last commit: ${repo.pushed_at_date.toLocaleDateString()}
+		</div>
+		<div class="col-1 text-end collapse-trigger">
 			<i role="button" class="fa-solid fa-chevron-down" data-bs-toggle="collapse" data-bs-target="#repo-${repo.id}"></i>
 		</div>
+	</div>
+	<div class="row">
+		<div class="col-8 text-secondary description">${repo.description}</div>
 	</div>
 </div>
 
 <div id="repo-${repo.id}" class="collapse repo-details" element.ref="collapse">
 	<div class="container">
+		<div if.bind="parentRepo" class="row">
+			<div class="col-3"><span class="caption fw-semibold">Forked from:</span></div>
+			<div class="col">
+				<a class="icon-link gh-link" href="${parentRepo.html_url}" data-bs-toggle="tooltip" data-bs-title="Parent repository page" target="_blank" external>${parentRepo.full_name}</a>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-3"><span class="caption fw-semibold">Contributors (${contributors.length}):</span></div>
 			<div class="col">

@@ -20,7 +20,6 @@ export class User {
 			return;
 		}
 
-		console.log(this.userRepos);
 		this.user = await this.rest.getUser(this.userListItem.login);
 		this.#isUserRetrieved = true;
 	}
@@ -47,7 +46,6 @@ export class User {
 			if (!this.userRepos.length) {
 				this.userRepos = await this.rest.getAllUserRepos(this.user.login, this.user.public_repos);
 			}
-			console.log(event);
 		});
 	}
 

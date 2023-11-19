@@ -6,6 +6,7 @@ import { RepoContributor, UserData, UserRepo } from './users.model';
 export class RepoListItem {
 	@bindable user: UserData;
 	@bindable repo: UserRepo;
+	parentRepo: UserRepo;
 	contributors: RepoContributor[];
 	languages: string | undefined;
 	sortedLanguages = [] as [string, number][];
@@ -17,10 +18,17 @@ export class RepoListItem {
 	attached(): void {
 		this.collapse.addEventListener('show.bs.collapse', () => {
 			if (this.languages === undefined) {
+				this.getRepo();
 				this.getContributors();
 				this.getLanguages();
 			}
 		})
+	}
+
+	async getRepo(): Promise<void> {
+		const repo = await this.rest.getRepo(this.repo.owner.login, this.repo.name);
+
+		this.parentRepo = repo.parent;
 	}
 
 	async getContributors(): Promise<void> {
@@ -31,7 +39,6 @@ export class RepoListItem {
 		const languagesResponse = await this.rest.getRepoLanguages(this.repo.owner.login, this.repo.name);
 
 		this.sortedLanguages = Object.entries(languagesResponse).sort((a, b) => b[1] - a[1]);
-		console.log('sortred languages:', this.sortedLanguages);
 		this.totalLanguages = Object.values(languagesResponse).reduce((acc, current) => acc + current, 0);
 		this.languages = Object.keys(languagesResponse).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())).join(', ') || 'N/A';
 	}
