@@ -1,24 +1,51 @@
-import { HttpClient } from '@aurelia/fetch-client';
-import { inject } from '@aurelia/kernel';
 import { RepoContributor, RepoLanguages, UserData, UserListItemData, UserRepo } from '../users/users.model';
 import { WeatherResponse } from '../weather/weather.model';
+import { EventAggregator, HttpClient, inject } from 'aurelia';
 
-@inject(HttpClient)
+@inject(EventAggregator, HttpClient)
 export class Rest {
-	constructor(public http: HttpClient) {
-		http.configure(config => config.useStandardConfiguration());
+	constructor(private ea: EventAggregator, private http: HttpClient) {
+		http.configure(config => config
+			.useStandardConfiguration()
+			.withInterceptor({
+				response(response, request) {
+					ea.publish('api:github:rateLimit', false);
+					console.log('request:', request, 'response:', response);
+
+					return response;
+				},
+				responseError(error, request) {
+					console.error('error:', error, '\nrequest:', request);
+
+					if (error instanceof Response) {
+						if (error.status === 403) {
+							ea.publish('api:github:rateLimit', true);
+							console.error('error: Github API calls rate limit exceeded');
+							throw new Error('Github API calls rate limit exceeded');
+						}
+						throw new Error('unidentified error');
+					}
+
+					return null;
+				}
+			}));
 	}
 
 	public async getUsers(url: string): Promise<UserListItemData[]> {
 		this.http.baseUrl = 'https://api.github.com/users';
 
-		return this.http.fetch(url).then(response => response.json());
+		return this.http.fetch(url)
+			.then(response => response.json())
+			.catch(error => {
+				console.error(error);
+				return [];
+			});
 	}
 
 	public async getUser(user: string): Promise<UserData> {
 		this.http.baseUrl = 'https://api.github.com/users/';
 
-		return this.http.fetch(user).then(response => response.json());
+		return this.http.fetch(user).then(response => response.json()).catch(() => null);
 	}
 
 	public async getUserRepos(user: string, page = 1, pageSize = 100): Promise<UserRepo[]> {
@@ -59,13 +86,13 @@ export class Rest {
 	public async getRepoContributors(owner: string, repo: string): Promise<RepoContributor[]> {
 		this.http.baseUrl = 'https://api.github.com/repos/';
 
-		return this.http.fetch(`${owner}/${repo}/contributors`).then(response => response.json());
+		return this.http.fetch(`${owner}/${repo}/contributors`).then(response => response.json()).catch(() => []);
 	}
 
 	public async getRepoLanguages(owner: string, repo: string): Promise<RepoLanguages> {
 		this.http.baseUrl = 'https://api.github.com/repos/';
 
-		return this.http.fetch(`${owner}/${repo}/languages`).then(response => response.json());
+		return this.http.fetch(`${owner}/${repo}/languages`).then(response => response.json()).catch(() => {});
 	}
 
 	public getWeatherCurrentGeosearch(key: string, params: string): Promise<WeatherResponse> {

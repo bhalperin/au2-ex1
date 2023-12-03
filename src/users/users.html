@@ -1,8 +1,8 @@
 <import from="./user"></import>
 <import from="../styles/users.scss"></import>
 
-<div class="container-fluid users-view" loading.class="isLoading">
-	<div class="row header position-sticky top-0">
+<div if.bind="!apiError" class="container-fluid users-view" loading.class="isLoading">
+	<div if.bind="!isLoading" class="row header position-sticky top-0">
 		<div class="col-md-8">
 			<h4>
 				<span if.bind="firstUser > 0">Showing <span data-testid="usersInPage">${users.length}</span> Github users (ID #<span data-testid="firstUser">${firstUser}</span> to #<span data-testid="lastUser">${lastUser}</span>)</span>
@@ -31,4 +31,8 @@
 			<div class="user-blog" show.bind="selectedUser.blog"><a href.bind="selectedUser.blog" target="_blank">${selectedUser.blog}</a></div>
 		</div>
 	</div>
+</div>
+
+<div if.bind="apiError" class="container-fluid users-view">
+	Github API calls rate limit exceeded
 </div>

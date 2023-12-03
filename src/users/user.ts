@@ -42,7 +42,7 @@ export class User {
 	public attached(): void {
 		this.#isUserRetrieved = false;
 		this.#enableTooltip();
-		this.reposModal.addEventListener('show.bs.modal', async (event) => {
+		this.reposModal.addEventListener('show.bs.modal', async () => {
 			if (!this.userRepos.length) {
 				this.userRepos = await this.rest.getAllUserRepos(this.user.login, this.user.public_repos);
 			}

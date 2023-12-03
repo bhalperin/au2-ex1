@@ -9,6 +9,7 @@ export class Users {
 	private firstUser = 0;
 	private lastUser = 0;
 	private isLoading = true;
+	private apiError = false;
 
 	constructor(private ea: EventAggregator, private rest: Rest) { }
 
@@ -23,6 +24,9 @@ export class Users {
 	public subscribe(): void {
 		this.ea.subscribe('userSelected', (user: UserData) => {
 			this.selectedUser = user;
+		});
+		this.ea.subscribe('api:github:rateLimit', (error: boolean) => {
+			this.apiError = error;
 		});
 	}
 
