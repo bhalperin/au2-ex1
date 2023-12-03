@@ -1,6 +1,6 @@
-import { IRoute } from '@aurelia/router';
+import { IRoute, IRouteableComponent } from '@aurelia/router';
 
-export class App {
+export class App implements IRouteableComponent {
 	static routes = [
 		{
 			path: ['', 'about'],
