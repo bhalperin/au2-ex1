@@ -3,7 +3,6 @@ export interface UserListItemData {
 	html_url: string;
 	id: number;
 	login: string;
-	name: string;
 }
 
 export interface UserData {
