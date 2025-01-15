@@ -50,7 +50,7 @@
 		"webpack-dev-server": "^5.2.0"
 	},
 	"scripts": {
-		"lint:js": "eslint src test --ext .js,.ts",
+		"lint:js": "eslint --format stylish --stats src test",
 		"lint:html": "htmlhint -c .htmlhintrc src",
 		"lint": "npm run lint:js && npm run lint:html",
 		"pretest": "npm run lint",
@@ -59,7 +59,7 @@
 		"analyze": "rimraf dist && webpack --env production --analyze",
 		"test": "jest",
 		"docker:build-image": "docker build -t au2-ex1 .",
-		"docker:run-container": "docker run -d -p 9000:80 au2-ex1"
+		"docker:run-container": "docker run -d -p 7000:80 au2-ex1"
 	},
 	"jest": {
 		"testEnvironment": "jsdom",
