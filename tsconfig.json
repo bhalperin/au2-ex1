@@ -1,7 +1,5 @@
 {
 	"compilerOptions": {
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
 		"moduleResolution": "node",
 		"skipLibCheck": true,
 		"target": "ES2017",
