@@ -19,7 +19,7 @@ export class UsersPage {
 	async goto(): Promise<void> {
 		await this.page.route('https://api.github.com/users?since=0', async route => route.fulfill({ json: USERS_RESPONSE.firstPage }));
 		await this.page.route('https://api.github.com/users?since=3', async route => route.fulfill({ json: USERS_RESPONSE.secondPage }));
-		await this.page.goto('http://localhost:9000/#/users');
+		await this.page.goto('http://localhost:7000/#/users');
 	}
 
 	async clickNext(): Promise<void> {

@@ -17,7 +17,7 @@ export class UserPage {
 	async goto(): Promise<void> {
 		await this.page.route('https://api.github.com/users?since=0', async route => route.fulfill({ json: USERS_RESPONSE.firstPage }));
 		await this.page.route(`https://api.github.com/users/${this.firstUserLogin}`, async route => route.fulfill({ json: USERS_DETAILS_RESPONSE[this.firstUserLogin] }));
-		await this.page.goto('http://localhost:9000/#/users');
+		await this.page.goto('http://localhost:7000/#/users');
 		await Promise.all([
 			this.page.waitForResponse(response => response.url().includes('users?since'))
 		]);
