@@ -5,9 +5,13 @@ declare module '*.html' {
   export default template;
   export const dependencies: string[];
   export const containerless: boolean | undefined;
-  export const bindables: Record<string, PartialBindableDefinition>;
+  // export const bindables: Record<string, PartialBindableDefinition>;
+  export const bindables: (
+    | string
+    | (PartialBindableDefinition & { name: string })
+  )[];
   export const shadowOptions: { mode: 'open' | 'closed' } | undefined;
-  export function register(container: IContainer);
+  export function register(container: IContainer): void;
 }
 
 declare module '*.css';
