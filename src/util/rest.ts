@@ -1,11 +1,12 @@
+import { HttpClient } from '@aurelia/fetch-client';
+import { EventAggregator, inject } from 'aurelia';
 import { RepoContributor, RepoLanguages, UserData, UserListItemData, UserRepo } from '../users/users.model';
 import { WeatherResponse } from '../weather/weather.model';
-import { EventAggregator, HttpClient, inject } from 'aurelia';
 
 @inject(EventAggregator, HttpClient)
 export class Rest {
-	constructor(private ea: EventAggregator, private http: HttpClient) {
-		http.configure(config => config
+	constructor(private readonly ea: EventAggregator, private readonly http: HttpClient) {
+		this.http.configure(config => config
 			.useStandardConfiguration()
 			.withInterceptor({
 				response(response, request) {

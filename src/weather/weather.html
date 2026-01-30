@@ -9,25 +9,33 @@
 				<div class="input-group row col-sm-3">
 					<input type="text" class="form-control col" value.bind="city" placeholder="City" />
 					<span class="input-group-btn col">
-						<button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-search"></i> Search</button>
+						<button type="submit" class="btn btn-outline-primary" disabled.bind="!city.trim().length">
+							<i class="fa-solid fa-search"></i> Search
+						</button>
 					</span>
 					<span class="no-data" show.bind="!currentWeather">${error}</span>
 				</div>
 			</div>
-			<div class="form-group">
-				<label class="col-sm-1 control-label" for=""></label>
-				<span class="converted-city">${selectedCity | upper}</span>
-			</div>
 		</form>
 		<div class="container-fluid">
-			<div if.bind="currentWeather" class="row">
-				<current-weather city.bind="cityToWeather" current-weather.bind="currentWeather" icon-url.bind="iconUrl"></current-weather>
+			<div if.bind="!!currentWeather" class="row">
+				<current-weather
+					city.bind="cityToWeather"
+					current-weather.bind="currentWeather"
+					icon-url.bind="iconUrl"
+				></current-weather>
 			</div>
 		</div>
 	</div>
 </section>
 <section>
-	<!-- <google-map class="map-box" component.ref="gmap" address.bind="mapOptions.address" zoom.bind="mapOptions.zoom"></google-map> -->
-	<!-- <google-map class="map-box" address.bind="mapOptions.address" zoom.bind="mapOptions.zoom"></google-map> -->
-	<!-- <google-map class="map-box" latitude.bind="mapOptions.lat" longitude.bind="mapOptions.lon" zoom.bind="mapOptions.zoom"></google-map> -->
+	<google-map
+		hidden.bind="!city.trim().length"
+		component.ref="gmap"
+		class="map-box"
+		latitude.bind="mapOptions.lat"
+		longitude.bind="mapOptions.lon"
+		zoom.bind="mapOptions.zoom"
+	>
+	</google-map>
 </section>

@@ -1,4 +1,5 @@
 import { inject } from 'aurelia';
+import { GoogleMaps } from 'aurelia2-google-maps';
 import { MapOptions } from '../util/maps';
 import { Rest } from '../util/rest';
 import { WEATHER_API_KEY, WeatherBit, WeatherResponse } from './weather.model';
@@ -6,24 +7,22 @@ import { WEATHER_API_KEY, WeatherBit, WeatherResponse } from './weather.model';
 @inject(Rest)
 export class Weather {
 	public heading = 'Weather in selected city';
-	public city = 'New York';
+	public city = '';
 	public cityToWeather: string;
 	public address: string;
 	public currentWeather: WeatherBit;
 	public error: string;
 	public iconUrl: string;
-	public gmap;
+	public gmap: GoogleMaps;
 	public mapOptions: MapOptions = {
-		address: '',
+		address: 'new york, ny',
 		zoom: 12,
-		lat: 40.71427,
-		lon: -74.00597
+		lat: 0,
+		lon: 0,
 	};
 	public myClass: string = Math.random() > 0.5 ? 'benny' : '';
 
-	constructor(private rest: Rest) {
-		// this.map = new GoogleMaps();
-	}
+	constructor(private rest: Rest) {}
 
 	public created() {
 		this.cityToWeather = this.city;
@@ -48,7 +47,8 @@ export class Weather {
 		return valueToDisplay;
 	}
 
-	public submit() {
+	public async submit() {
+		await this.updateMap();
 		this.currentWeather = null;
 		this.getWeatherCurrentGeosearch();
 		this.cityToWeather = this.city;
@@ -57,7 +57,8 @@ export class Weather {
 	}
 
 	public getWeatherCurrentGeosearch(): void {
-		this.rest.getWeatherCurrentGeosearch(WEATHER_API_KEY, this.city)
+		this.rest
+			.getWeatherCurrentGeosearch(WEATHER_API_KEY, this.city)
 			.then((response: WeatherResponse) => {
 				if (!response) {
 					throw new Error('No response');
@@ -75,5 +76,21 @@ export class Weather {
 			.catch((error: Error) => {
 				this.error = error.message;
 			});
+	}
+
+	public async updateMap() {
+		const geocoder = await this.gmap.getGeocoder();
+
+		geocoder.geocode({ address: this.city }, (results, status) => {
+			if (status === google.maps.GeocoderStatus.OK && results[0]) {
+				const location = results[0].geometry.location;
+
+				this.mapOptions.lat = location.lat();
+				this.mapOptions.lon = location.lng();
+				console.log('Geocode result:', results[0]);
+			} else {
+				console.error('Geocode was not successful for the following reason:', status);
+			}
+		});
 	}
 }

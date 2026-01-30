@@ -1,18 +1,19 @@
-import { IRoute, IRouteableComponent } from '@aurelia/router';
+import { route } from '@aurelia/router';
 
-export class App implements IRouteableComponent {
-	static routes = [
+@route({
+	routes: [
 		{
 			path: ['', 'about'],
-			component: () => import('./about/about')
+			component: () => import('./about/about'),
 		},
 		{
 			path: 'users',
-			component: () => import('./users/users')
+			component: () => import('./users/users'),
 		},
 		{
 			path: 'weather',
-			component: () => import('./weather/weather')
-		}
-	] as IRoute[];
-}
+			component: () => import('./weather/weather'),
+		},
+	],
+})
+export class App {}
