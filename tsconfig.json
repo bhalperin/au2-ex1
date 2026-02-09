@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"moduleResolution": "node",
 		"skipLibCheck": true,
-		"target": "ES2017",
+		"target": "es2022",
 		"esModuleInterop": true,
 		"resolveJsonModule": true,
 		"sourceMap": true,
