@@ -1,0 +1,30 @@
+.current-weather {
+	padding: 0 6px;
+
+	[class="row"] {
+		margin: 0;
+		padding: 0;
+	}
+
+	[class*="col-"] {
+		margin: 0;
+		padding: 0;
+	}
+
+	.current-weather-icon {
+		width: 32px;
+	}
+
+	.temperature {
+		font-size: 1em;
+		vertical-align: sub;
+
+		&::after {
+			content: '\b0';
+		}
+	}
+
+	.weather-description {
+		font-size: 12px;
+	}
+}

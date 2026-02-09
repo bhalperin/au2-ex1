@@ -1,0 +1,40 @@
+.page-wrapper {
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-rows: max-content minmax(180px, max-content);
+    height: 100%;
+
+	.data-wrapper {
+		align-items: center;
+		display: grid;
+		gap: 16px;
+		grid-auto-flow: column;
+		height: 100%;
+		justify-content: start;
+	}
+
+	.no-data {
+		font-weight: bold;
+	}
+
+	.map-container {
+		position: relative;
+
+		.map-box {
+			border: 2px solid rgba(128, 128, 128, 0.5);
+			height: 100%;
+			position: absolute;
+			width: 100%;
+		}
+
+		.no-location {
+			background-color: rgba(255, 255, 255, 0.8);
+			border: 2px solid rgba(128, 128, 128, 0.5);
+			display: grid;
+			font-weight: bold;
+			height: 100%;
+			place-items: center;
+			width: 100%;
+		}
+	}
+}
