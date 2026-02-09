@@ -12,12 +12,6 @@
 			"@/*": ["src/*"]
 		}
 	},
-	"include": [
-		"test",
-		"e2e",
-		"src"
-	],
-	"files": [
-		"src/resource.d.ts"
-	]
+	"include": ["test", "e2e", "src"],
+	"files": ["src/resource.d.ts"]
 }

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -11,9 +10,9 @@ const postcssLoader = {
 	loader: 'postcss-loader',
 	options: {
 		postcssOptions: {
-			plugins: ['autoprefixer']
-		}
-	}
+			plugins: ['autoprefixer'],
+		},
+	},
 };
 
 module.exports = function (env, { analyze }) {
@@ -25,65 +24,66 @@ module.exports = function (env, { analyze }) {
 		mode: production ? 'production' : 'development',
 		devtool: production ? undefined : 'eval-source-map',
 		entry: {
-			entry: './src/main.ts'
+			entry: './src/main.ts',
 		},
 		output: {
 			path: path.resolve(__dirname, 'dist'),
 			filename: production ? '[name].[contenthash].bundle.js' : '[name].bundle.js',
-			publicPath: ASSET_PATH
+			publicPath: ASSET_PATH,
 		},
 		resolve: {
 			extensions: ['.ts', '.js'],
 			modules: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'dev-app'), 'node_modules'],
-			alias: production ? {
-				// add your production aliasing here
-			} : {
-				...[
-					'fetch-client',
-					'kernel',
-					'metadata',
-					'platform',
-					'platform-browser',
-					'plugin-conventions',
-					'route-recognizer',
-					'router',
-					'router-lite',
-					'runtime',
-					'runtime-html',
-					'testing',
-					'webpack-loader',
-				].reduce((map, pkg) => {
-					const name = `@aurelia/${pkg}`;
-					map[name] = path.resolve(__dirname, 'node_modules', name, 'dist/esm/index.dev.mjs');
-					return map;
-				}, {
-					'aurelia': path.resolve(__dirname, 'node_modules/aurelia/dist/esm/index.dev.mjs'),
-					// add your development aliasing here
-				})
-			}
+			alias: production
+				? {
+						// add your production aliasing here
+					}
+				: {
+						...[
+							'fetch-client',
+							'kernel',
+							'metadata',
+							'platform',
+							'platform-browser',
+							'plugin-conventions',
+							'route-recognizer',
+							'router',
+							'router-lite',
+							'runtime',
+							'runtime-html',
+							'testing',
+							'webpack-loader',
+						].reduce(
+							(map, pkg) => {
+								const name = `@aurelia/${pkg}`;
+								map[name] = path.resolve(__dirname, 'node_modules', name, 'dist/esm/index.dev.mjs');
+								return map;
+							},
+							{
+								aurelia: path.resolve(__dirname, 'node_modules/aurelia/dist/esm/index.dev.mjs'),
+								// add your development aliasing here
+							},
+						),
+					},
 		},
 		devServer: {
 			historyApiFallback: true,
 			open: !process.env.CI,
-			port: 7000
+			port: 7000,
 		},
 		module: {
 			rules: [
 				{
 					test: /\.(png|svg|jpg|jpeg|gif)$/i,
-					type: 'asset'
+					type: 'asset',
 				},
 				{
 					test: /\.(woff|woff2|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-					type: 'asset'
+					type: 'asset',
 				},
 				{
 					test: /\.css$/i,
-					use: [
-						'style-loader',
-						cssLoader,
-						postcssLoader
-					]
+					use: ['style-loader', cssLoader, postcssLoader],
 				},
 				{
 					test: /\.less$/i,
@@ -93,10 +93,10 @@ module.exports = function (env, { analyze }) {
 						{
 							loader: 'less-loader',
 							options: {
-								sourceMap: true
-							}
-						}
-					]
+								sourceMap: true,
+							},
+						},
+					],
 				},
 				{
 					test: /\.scss$/i,
@@ -106,27 +106,27 @@ module.exports = function (env, { analyze }) {
 						{
 							loader: 'sass-loader',
 							options: {
-								sourceMap: true
-							}
-						}
-					]
+								sourceMap: true,
+							},
+						},
+					],
 				},
 				{
 					test: /\.ts$/i,
 					use: ['ts-loader', '@aurelia/webpack-loader'],
-					exclude: /node_modules/
+					exclude: /node_modules/,
 				},
 				{
 					test: /\.js$/i,
 					use: ['@aurelia/webpack-loader'],
-					exclude: /node_modules/
+					exclude: /node_modules/,
 				},
 				{
 					test: /[/\\]src[/\\].+\.html$/i,
 					use: '@aurelia/webpack-loader',
-					exclude: /node_modules/
-				}
-			]
+					exclude: /node_modules/,
+				},
+			],
 		},
 		plugins: [
 			new HtmlWebpackPlugin({ template: 'index.html', favicon: 'favicon.ico' }),
@@ -135,8 +135,8 @@ module.exports = function (env, { analyze }) {
 			}),
 			analyze && new BundleAnalyzerPlugin(),
 			new webpack.DefinePlugin({
-				'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH)
-			})
-		].filter(p => p)
-	}
-}
+				'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
+			}),
+		].filter((p) => p),
+	};
+};
