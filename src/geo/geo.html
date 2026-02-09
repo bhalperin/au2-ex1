@@ -1,0 +1,65 @@
+<import from="../styles/geo.scss"></import>
+
+<div class="page-wrapper">
+	<section class="au-animate">
+		<form class="form-horizontal" role="form" submit.trigger="submit()">
+			<h2 class="bold ${myClass}">${heading}</h2>
+			<div class="row form-group">
+				<label class="col-sm-1 control-label" for="location">Location:</label>
+				<div class="input-group row col-sm-3">
+					<input
+						id="location"
+						type="text"
+						class="form-control col"
+						value.bind="locationName"
+						placeholder="A valid Google Maps location"
+					/>
+					<span class="input-group-btn col">
+						<button
+							type="submit"
+							class="btn btn-outline-primary"
+							disabled.bind="!locationName.trim().length"
+						>
+							<i class="fa-solid fa-search"></i> Search
+						</button>
+					</span>
+				</div>
+			</div>
+		</form>
+	</section>
+	<section class="geo-data">
+		<div class="data-wrapper">
+			<geo-data-box css-class.bind="'weather-box'" icon-class.bind="'fa-solid fa-temperature-half'">
+				<div class="row">
+					<div if.bind="!!weatherError">Error fetching weather data</div>
+					<current-weather
+						else
+						current-weather.bind="currentWeather"
+						icon-url.bind="iconUrl"
+					></current-weather>
+				</div>
+				<div au-slot="title">Weather</div>
+			</geo-data-box>
+			<geo-data-box icon-class.bind="'fa-solid fa-users'">
+				<div au-slot="title">Demographics</div>
+			</geo-data-box>
+			<geo-data-box icon-class.bind="'fa-solid fa-coins'">
+				<div au-slot="title">Financials</div>
+			</geo-data-box>
+		</div>
+	</section>
+	<section class="map-container">
+		<div if.bind="!!mapError" class="no-location">
+			<div>${mapError}</div>
+		</div>
+		<google-map
+			show.bind="!mapError"
+			component.ref="gmap"
+			class="map-box"
+			latitude.bind="mapOptions.lat"
+			longitude.bind="mapOptions.lon"
+			zoom.bind="mapOptions.zoom"
+		>
+		</google-map>
+	</section>
+</div>

@@ -1,0 +1,9 @@
+<import from="./geo-data-box.scss"></import>
+
+<div class="geo-data-box" class.bind="cssClass">
+	<div class="header">
+		<div class="box-icon-container"><i class="box-icon" class.bind="iconClass"></i></div>
+		<div class="box-title"><au-slot name="title">Title goes here</au-slot></div>
+	</div>
+	<div class="body"><au-slot>Body goes here</au-slot></div>
+</div>

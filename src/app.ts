@@ -11,8 +11,8 @@ import { route } from '@aurelia/router';
 			component: () => import('./users/users'),
 		},
 		{
-			path: 'weather',
-			component: () => import('./weather/weather'),
+			path: 'geo',
+			component: () => import('./geo/geo'),
 		},
 	],
 })
