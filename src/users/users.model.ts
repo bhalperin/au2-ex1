@@ -7,7 +7,7 @@ export interface UserListItemData {
 
 export interface UserData {
 	avatar_url: string;
-	bio: string;
+	bio: string | null;
 	blog: string;
 	html_url: string;
 	id: number;
@@ -25,7 +25,7 @@ export interface UserRepo {
 	name: string;
 	owner: {
 		login: string;
-	}
+	};
 	parent?: UserRepo;
 	pushed_at: string;
 	pushed_at_date: Date;

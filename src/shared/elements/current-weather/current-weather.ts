@@ -2,22 +2,22 @@ import { bindable } from 'aurelia';
 import { WeatherBit } from '../../../geo/weather.model';
 
 export class CurrentWeatherCustomElement {
-	@bindable public currentWeather = null as WeatherBit;
+	@bindable public currentWeather = null as WeatherBit | null;
 	@bindable public iconUrl = '';
 
 	constructor() {}
 
-	get temperature(): string {
+	get temperature() {
 		let value = '';
 
-		if (this.currentWeather) {
+		if (this.currentWeather?.temp) {
 			value = `${Math.round(this.currentWeather.temp).toString()}`;
 		}
 
 		return value;
 	}
 
-	get weatherDescription(): string {
+	get weatherDescription() {
 		let valueToDisplay = '';
 
 		if (this.currentWeather) {

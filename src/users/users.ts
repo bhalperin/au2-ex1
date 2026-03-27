@@ -5,23 +5,26 @@ import { UserData, UserListItemData } from './users.model';
 @inject(EventAggregator, Rest)
 export class Users {
 	public users = [] as UserListItemData[];
-	public selectedUser: UserListItemData;
+	public selectedUser?: UserListItemData;
 	private firstUser = 0;
 	private lastUser = 0;
 	private isLoading = true;
 	private apiError = false;
 
-	constructor(private ea: EventAggregator, private rest: Rest) { }
+	constructor(
+		private ea: EventAggregator,
+		private rest: Rest
+	) {}
 
-	public created(): void {
+	public created() {
 		this.subscribe();
 	}
 
-	public attached(): void {
+	public attached() {
 		this.getUsers();
 	}
 
-	public subscribe(): void {
+	public subscribe() {
 		this.ea.subscribe('userSelected', (user: UserData) => {
 			this.selectedUser = user;
 		});
@@ -30,7 +33,7 @@ export class Users {
 		});
 	}
 
-	public async getUsers(): Promise<void> {
+	public async getUsers() {
 		this.isLoading = true;
 
 		const response = await this.rest.getUsers(`?since=${this.lastUser}`);
@@ -45,7 +48,7 @@ export class Users {
 		this.isLoading = false;
 	}
 
-	public flipUsersToFront(): void {
+	public flipUsersToFront() {
 		this.ea.publish('flipToFront');
 	}
 }

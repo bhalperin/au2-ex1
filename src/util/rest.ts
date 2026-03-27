@@ -8,7 +8,7 @@ import { RepoContributor, RepoLanguages, UserData, UserListItemData, UserRepo } 
 export class Rest {
 	constructor(
 		private readonly ea: EventAggregator,
-		private readonly http: HttpClient,
+		private readonly http: HttpClient
 	) {
 		this.http.configure((config) =>
 			config.useStandardConfiguration().withInterceptor({
@@ -30,9 +30,9 @@ export class Rest {
 						throw error;
 					}
 
-					return null;
+					throw error;
 				},
-			}),
+			})
 		);
 	}
 
@@ -125,7 +125,7 @@ export class Rest {
 			})
 			.catch((error) => {
 				console.error(error);
-				if (error instanceof Response) {
+				if (error instanceof Response && error.body) {
 					error.body
 						.getReader()
 						.read()

@@ -14,40 +14,44 @@ export class UserPage {
 		this.firstUserCard = this.page.getByTestId(`user-${this.firstUserId}`);
 	}
 
-	async goto(): Promise<void> {
-		await this.page.route('https://api.github.com/users?since=0', async route => route.fulfill({ json: USERS_RESPONSE.firstPage }));
-		await this.page.route(`https://api.github.com/users/${this.firstUserLogin}`, async route => route.fulfill({ json: USERS_DETAILS_RESPONSE[this.firstUserLogin] }));
+	async goto() {
+		await this.page.route('https://api.github.com/users?since=0', async (route) =>
+			route.fulfill({ json: USERS_RESPONSE.firstPage })
+		);
+		await this.page.route(`https://api.github.com/users/${this.firstUserLogin}`, async (route) =>
+			route.fulfill({ json: USERS_DETAILS_RESPONSE[this.firstUserLogin] })
+		);
 		await this.page.goto('http://localhost:7000/#/users');
-		await Promise.all([
-			this.page.waitForResponse(response => response.url().includes('users?since'))
-		]);
+		await Promise.all([this.page.waitForResponse((response) => response.url().includes('users?since'))]);
 	}
 
-	async firstUserCardLogin(): Promise<string> {
-		return (await this.firstUserCard.locator('.card .card-body .card-title').textContent()).trim();
+	async firstUserCardLogin() {
+		const locator = this.firstUserCard.locator('.card .card-body .card-title');
+
+		return (await locator?.textContent())?.trim();
 	}
 
-	firstUserCardName(): Locator {
+	firstUserCardName() {
 		return this.firstUserCard.locator('.card.back .card-body .card-title.user-name');
 	}
 
-	firstUserCardBlogLink(): Locator {
+	firstUserCardBlogLink() {
 		return this.firstUserCard.locator('.card.back .card-body .user-blog a');
 	}
 
-	async flipFirstUserCard(): Promise<void> {
+	async flipFirstUserCard() {
 		await this.fliptUserCard(1);
 	}
 
-	async fliptUserCard(serial: number): Promise<void> {
+	async fliptUserCard(serial: number) {
 		const userCard = this.page.getByTestId(`user-${serial}`);
-		const responsePromise =  this.page.waitForResponse(response => response.url().includes('users/'));
+		const responsePromise = this.page.waitForResponse((response) => response.url().includes('users/'));
 
 		await userCard.getByTestId('flipToBack').click();
 		await responsePromise;
 	}
 
-	async isLoading(): Promise<boolean> {
+	async isLoading() {
 		return await !!this.page.locator('.loading');
 	}
 }

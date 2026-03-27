@@ -2,8 +2,8 @@ import { bindable } from 'aurelia';
 import { UserData, UserRepo } from './users.model';
 
 export class UserRepos {
-	@bindable user: UserData;
-	@bindable repos: UserRepo[];
+	@bindable user = null as UserData | null;
+	@bindable repos = [] as UserRepo[];
 
 	constructor() {}
 }

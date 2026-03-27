@@ -1,4 +1,4 @@
-import { Locator, Page } from "@playwright/test";
+import { Locator, Page } from '@playwright/test';
 import { USERS_RESPONSE } from '../mocks/users.mock';
 
 export class UsersPage {
@@ -16,24 +16,28 @@ export class UsersPage {
 		this.nextButton = this.page.getByRole('button', { name: /next/i });
 	}
 
-	async goto(): Promise<void> {
-		await this.page.route('https://api.github.com/users?since=0', async route => route.fulfill({ json: USERS_RESPONSE.firstPage }));
-		await this.page.route('https://api.github.com/users?since=3', async route => route.fulfill({ json: USERS_RESPONSE.secondPage }));
+	async goto() {
+		await this.page.route('https://api.github.com/users?since=0', async (route) =>
+			route.fulfill({ json: USERS_RESPONSE.firstPage })
+		);
+		await this.page.route('https://api.github.com/users?since=3', async (route) =>
+			route.fulfill({ json: USERS_RESPONSE.secondPage })
+		);
 		await this.page.goto('http://localhost:7000/#/users');
 	}
 
-	async clickNext(): Promise<void> {
+	async clickNext() {
 		await Promise.all([
-			this.page.waitForResponse(response => response.url().includes('users?since')),
-			this.nextButton.click()
+			this.page.waitForResponse((response) => response.url().includes('users?since')),
+			this.nextButton.click(),
 		]);
 	}
 
-	async waitForLoaded(): Promise<void> {
+	async waitForLoaded() {
 		await this.page.waitForFunction(() => !document.querySelector('.loading'));
 	}
 
-	async isLoading(): Promise<boolean> {
+	async isLoading() {
 		return await !!this.page.locator('.loading');
 	}
 }

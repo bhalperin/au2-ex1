@@ -8,18 +8,18 @@ import { WEATHER_API_KEY, WeatherBit, WeatherResponse } from './weather.model';
 export class Geo {
 	public heading = 'Geographic Data';
 	public locationName = '';
-	public locationToWeather: string;
-	public address: string;
-	public currentWeather: WeatherBit;
-	public weatherError: string;
-	public iconUrl: string;
-	public gmap: GoogleMaps;
-	public mapOptions: MapOptions = {
+	public locationToWeather = '';
+	public address = '';
+	public currentWeather = null as WeatherBit | null;
+	public weatherError = '';
+	public iconUrl = null as string | null;
+	public gmap!: GoogleMaps;
+	public mapOptions = {
 		address: 'new york, ny',
 		zoom: 12,
 		lat: 0,
 		lon: 0,
-	};
+	} as MapOptions;
 	public mapError = '';
 	public myClass = Math.random() > 0.5 ? 'benny' : '';
 
@@ -41,7 +41,7 @@ export class Geo {
 	get weather() {
 		let valueToDisplay = 'City not found';
 
-		if (this.currentWeather) {
+		if (this.currentWeather?.temp) {
 			valueToDisplay = `${Math.round(this.currentWeather.temp).toString()} degrees. ${this.currentWeather.weather.description}`;
 		}
 

@@ -5,17 +5,20 @@ import { UserData, UserListItemData, UserRepo } from './users.model';
 
 @inject(EventAggregator, Rest)
 export class User {
-	@bindable public userListItem: UserListItemData;
+	@bindable public userListItem!: UserListItemData;
 	readonly #FLIPPED_CLASS = 'is-flipped';
 	#isUserRetrieved = false;
-	user: UserData;
+	user?: UserData;
 	userRepos = [] as UserRepo[];
-	private cardPanel: HTMLElement;
-	private reposModal: HTMLElement;
+	private cardPanel!: HTMLElement;
+	private reposModal!: HTMLElement;
 
-	constructor(private ea: EventAggregator, private rest: Rest) { }
+	constructor(
+		private ea: EventAggregator,
+		private rest: Rest
+	) {}
 
-	async #getUser(): Promise<void> {
+	async #getUser() {
 		if (this.#isUserRetrieved) {
 			return;
 		}
@@ -24,44 +27,44 @@ export class User {
 		this.#isUserRetrieved = true;
 	}
 
-	#flipUser(): void {
+	#flipUser() {
 		this.cardPanel?.classList.toggle(this.#FLIPPED_CLASS);
 		this.#enableTooltip();
 	}
 
-	#enableTooltip(): void {
-		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+	#enableTooltip() {
+		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
 
-		tooltipTriggerList.forEach(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+		tooltipTriggerList.forEach((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl));
 	}
 
-	public created(): void {
+	public created() {
 		this.subscribe();
 	}
 
-	public attached(): void {
+	public attached() {
 		this.#isUserRetrieved = false;
 		this.#enableTooltip();
 		this.reposModal.addEventListener('show.bs.modal', async () => {
-			if (!this.userRepos.length) {
+			if (this.user && !this.userRepos.length) {
 				this.userRepos = await this.rest.getAllUserRepos(this.user.login, this.user.public_repos);
 			}
 		});
 	}
 
-	public subscribe(): void {
+	public subscribe() {
 		this.ea.subscribe('flipToFront', () => {
 			this.cardPanel?.classList.remove(this.#FLIPPED_CLASS);
 		});
 	}
 
-	public publish(user): void {
+	public publish(user: UserData) {
 		this.ea.publish('userSelected', user);
 	}
 
-	public async flipClicked(ev: MouseEvent, frontClicked: boolean): Promise<void> {
+	public async flipClicked(ev: MouseEvent, frontClicked: boolean) {
 		ev.stopPropagation();
-		bootstrap.Tooltip.getInstance(ev.target as HTMLElement).hide();
+		bootstrap.Tooltip.getInstance(ev.target as HTMLElement)?.hide();
 
 		if (frontClicked) {
 			await this.#getUser();
