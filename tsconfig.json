@@ -1,12 +1,26 @@
 {
 	"compilerOptions": {
-		"moduleResolution": "nodenext",
+		"moduleResolution": "bundler",
 		"skipLibCheck": true,
 		"target": "es2022",
 		"esModuleInterop": true,
 		"resolveJsonModule": true,
 		"sourceMap": true,
-		"module": "nodenext",
+		"module": "esnext",
+		"strict": true,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"allowUnusedLabels": false,
+		"noUncheckedSideEffectImports": true,
+		"noFallthroughCasesInSwitch": true,
+		"allowUnreachableCode": false,
+		"noUncheckedIndexedAccess": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"erasableSyntaxOnly": true,
+		"noImplicitOverride": true,
+		"noErrorTruncation": true,
+		"exactOptionalPropertyTypes": false,
+		"allowJs": true,
 		"paths": {
 			"@/*": ["./src/*"]
 		},

@@ -5,6 +5,8 @@ import { UserData, UserListItemData, UserRepo } from './users.model';
 
 @inject(EventAggregator, Rest)
 export class User {
+	#ea: EventAggregator;
+	#rest: Rest;
 	@bindable public userListItem!: UserListItemData;
 	readonly #FLIPPED_CLASS = 'is-flipped';
 	#isUserRetrieved = false;
@@ -13,17 +15,17 @@ export class User {
 	private cardPanel!: HTMLElement;
 	private reposModal!: HTMLElement;
 
-	constructor(
-		private ea: EventAggregator,
-		private rest: Rest
-	) {}
+	constructor(ea: EventAggregator, rest: Rest) {
+		this.#ea = ea;
+		this.#rest = rest;
+	}
 
 	async #getUser() {
 		if (this.#isUserRetrieved) {
 			return;
 		}
 
-		this.user = await this.rest.getUser(this.userListItem.login);
+		this.user = await this.#rest.getUser(this.userListItem.login);
 		this.#isUserRetrieved = true;
 	}
 
@@ -47,19 +49,19 @@ export class User {
 		this.#enableTooltip();
 		this.reposModal.addEventListener('show.bs.modal', async () => {
 			if (this.user && !this.userRepos.length) {
-				this.userRepos = await this.rest.getAllUserRepos(this.user.login, this.user.public_repos);
+				this.userRepos = await this.#rest.getAllUserRepos(this.user.login, this.user.public_repos);
 			}
 		});
 	}
 
 	public subscribe() {
-		this.ea.subscribe('flipToFront', () => {
+		this.#ea.subscribe('flipToFront', () => {
 			this.cardPanel?.classList.remove(this.#FLIPPED_CLASS);
 		});
 	}
 
 	public publish(user: UserData) {
-		this.ea.publish('userSelected', user);
+		this.#ea.publish('userSelected', user);
 	}
 
 	public async flipClicked(ev: MouseEvent, frontClicked: boolean) {

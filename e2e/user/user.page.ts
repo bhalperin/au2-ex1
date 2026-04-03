@@ -3,8 +3,8 @@ import { USERS_DETAILS_RESPONSE, USERS_RESPONSE } from '../mocks/users.mock';
 
 export class UserPage {
 	readonly page: Page;
-	readonly firstUserId = USERS_RESPONSE.firstPage[0].id;
-	readonly firstUserLogin = USERS_RESPONSE.firstPage[0].login;
+	readonly firstUserId = USERS_RESPONSE.firstPage[0]!.id;
+	readonly firstUserLogin = USERS_RESPONSE.firstPage[0]!.login;
 	firstUserCard: Locator;
 	userCards: Locator;
 

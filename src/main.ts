@@ -14,7 +14,7 @@ const mapsPluginOptions = {
 		zoom: 12,
 	}, // see https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapOptions
 } as ConfigInterface;
-const basePath = process.env.ASSET_PATH ?? '';
+const basePath = process.env['ASSET_PATH'] ?? '';
 
 Aurelia.register(
 	RouterConfiguration.customize({
@@ -22,7 +22,7 @@ Aurelia.register(
 	}),
 	SharedElements,
 	Utils,
-	GoogleMapsConfiguration.customize((config) => config.options(mapsPluginOptions)),
+	GoogleMapsConfiguration.customize((config) => config.options(mapsPluginOptions))
 	// GoogleMapsConfiguration.configure(mapsPluginOptions),
 )
 	.app(App)
