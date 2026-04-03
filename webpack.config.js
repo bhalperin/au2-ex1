@@ -33,7 +33,7 @@ module.exports = function (env, { analyze }) {
 		},
 		resolve: {
 			extensions: ['.ts', '.js'],
-			modules: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'dev-app'), 'node_modules'],
+			modules: [path.resolve(__dirname, 'src'), 'node_modules'],
 			alias: production
 				? {
 						// add your production aliasing here
