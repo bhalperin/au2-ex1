@@ -23,7 +23,7 @@ export class UsersPage {
 		await this.page.route('https://api.github.com/users?since=3', async (route) =>
 			route.fulfill({ json: USERS_RESPONSE.secondPage })
 		);
-		await this.page.goto('http://localhost:7000/#/users');
+		await this.page.goto('http://localhost:7000/users');
 	}
 
 	async clickNext() {
