@@ -108,6 +108,10 @@ module.exports = function (env, { analyze }) {
 							loader: 'sass-loader',
 							options: {
 								sourceMap: true,
+								sassOptions: {
+									quietDeps: true,
+									silenceDeprecations: ['import'],
+								},
 							},
 						},
 					],
