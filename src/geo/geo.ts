@@ -6,24 +6,27 @@ import { WEATHER_API_KEY, WeatherBit, WeatherResponse } from './weather.model';
 
 @inject(Rest)
 export class Geo {
+	#rest: Rest;
 	public heading = 'Geographic Data';
 	public locationName = '';
-	public locationToWeather: string;
-	public address: string;
-	public currentWeather: WeatherBit;
-	public weatherError: string;
-	public iconUrl: string;
-	public gmap: GoogleMaps;
-	public mapOptions: MapOptions = {
+	public locationToWeather = '';
+	public address = '';
+	public currentWeather = undefined as WeatherBit | undefined;
+	public weatherError = '';
+	public iconUrl = null as string | null;
+	public gmap!: GoogleMaps;
+	public mapOptions = {
 		address: 'new york, ny',
 		zoom: 12,
 		lat: 0,
 		lon: 0,
-	};
+	} as MapOptions;
 	public mapError = '';
 	public myClass = Math.random() > 0.5 ? 'benny' : '';
 
-	constructor(private rest: Rest) {}
+	constructor(rest: Rest) {
+		this.#rest = rest;
+	}
 
 	public created() {
 		this.locationToWeather = this.locationName;
@@ -41,7 +44,7 @@ export class Geo {
 	get weather() {
 		let valueToDisplay = 'City not found';
 
-		if (this.currentWeather) {
+		if (this.currentWeather?.temp) {
 			valueToDisplay = `${Math.round(this.currentWeather.temp).toString()} degrees. ${this.currentWeather.weather.description}`;
 		}
 
@@ -50,7 +53,7 @@ export class Geo {
 
 	public async submit() {
 		await this.updateMap();
-		this.currentWeather = null;
+		this.currentWeather = undefined;
 		await this.getWeatherCurrentGeosearch();
 		this.locationToWeather = this.locationName;
 
@@ -59,7 +62,7 @@ export class Geo {
 
 	public async getWeatherCurrentGeosearch() {
 		this.weatherError = '';
-		await this.rest
+		await this.#rest
 			.getWeatherCurrentGeosearch(WEATHER_API_KEY, this.locationName)
 			/* .getWeatherMock() */
 			.then((response: WeatherResponse) => {
@@ -68,10 +71,10 @@ export class Geo {
 				}
 
 				this.currentWeather = response.data[0];
-				if (!this.currentWeather.temp) {
+				if (!this.currentWeather?.temp) {
 					throw `${this.locationName} not found`;
 				}
-				this.iconUrl = this.rest.getWeatherIconUrl(WEATHER_API_KEY, this.currentWeather.weather.icon);
+				this.iconUrl = this.#rest.getWeatherIconUrl(WEATHER_API_KEY, this.currentWeather.weather.icon);
 
 				console.log('parent / currentWeather:', this.currentWeather);
 				console.log('parent / iconUrl:', this.iconUrl);
@@ -90,7 +93,7 @@ export class Geo {
 			switch (status) {
 				case google.maps.GeocoderStatus.OK:
 					if (results?.length) {
-						const location = results[0].geometry.location;
+						const location = results[0]!.geometry.location;
 
 						this.mapOptions.lat = location.lat();
 						this.mapOptions.lon = location.lng();

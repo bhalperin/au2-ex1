@@ -6,19 +6,19 @@ import { RepoContributor, RepoLanguages, UserData, UserListItemData, UserRepo } 
 
 @inject(EventAggregator, HttpClient)
 export class Rest {
-	constructor(
-		private readonly ea: EventAggregator,
-		private readonly http: HttpClient,
-	) {
-		this.http.configure((config) =>
+	readonly #http: HttpClient;
+
+	constructor(ea: EventAggregator, http: HttpClient) {
+		this.#http = http;
+		this.#http.configure((config) =>
 			config.useStandardConfiguration().withInterceptor({
-				response(response, request) {
+				response: (response, request) => {
 					ea.publish('api:github:rateLimit', false);
 					console.log('request:', request, 'response:', response);
 
 					return response;
 				},
-				responseError(error, request) {
+				responseError: (error, request) => {
 					console.error('error:', error, '\nrequest:', request);
 
 					if (error instanceof Response) {
@@ -30,16 +30,16 @@ export class Rest {
 						throw error;
 					}
 
-					return null;
+					throw error;
 				},
-			}),
+			})
 		);
 	}
 
 	public async getUsers(url: string): Promise<UserListItemData[]> {
-		this.http.baseUrl = 'https://api.github.com/users';
+		this.#http.baseUrl = 'https://api.github.com/users';
 
-		return this.http
+		return this.#http
 			.fetch(url)
 			.then((response) => response.json())
 			.catch((error) => {
@@ -49,18 +49,18 @@ export class Rest {
 	}
 
 	public async getUser(user: string): Promise<UserData> {
-		this.http.baseUrl = 'https://api.github.com/users/';
+		this.#http.baseUrl = 'https://api.github.com/users/';
 
-		return this.http
+		return this.#http
 			.fetch(user)
 			.then((response) => response.json())
 			.catch(() => null);
 	}
 
 	public async getUserRepos(user: string, page = 1, pageSize = 100): Promise<UserRepo[]> {
-		this.http.baseUrl = 'https://api.github.com/users/';
+		this.#http.baseUrl = 'https://api.github.com/users/';
 
-		return this.http.fetch(`${user}/repos?per_page=${pageSize}&page=${page}`).then(async (response) => {
+		return this.#http.fetch(`${user}/repos?per_page=${pageSize}&page=${page}`).then(async (response) => {
 			const repos = (await response.json()) as unknown as UserRepo[];
 
 			repos.forEach((repo) => (repo.pushed_at_date = new Date(repo.pushed_at)));
@@ -87,24 +87,24 @@ export class Rest {
 	}
 
 	public async getRepo(owner: string, repo: string): Promise<UserRepo> {
-		this.http.baseUrl = 'https://api.github.com/repos/';
+		this.#http.baseUrl = 'https://api.github.com/repos/';
 
-		return this.http.fetch(`${owner}/${repo}`).then((response) => response.json());
+		return this.#http.fetch(`${owner}/${repo}`).then((response) => response.json());
 	}
 
 	public async getRepoContributors(owner: string, repo: string): Promise<RepoContributor[]> {
-		this.http.baseUrl = 'https://api.github.com/repos/';
+		this.#http.baseUrl = 'https://api.github.com/repos/';
 
-		return this.http
+		return this.#http
 			.fetch(`${owner}/${repo}/contributors`)
 			.then((response) => response.json())
 			.catch(() => []);
 	}
 
 	public async getRepoLanguages(owner: string, repo: string): Promise<RepoLanguages> {
-		this.http.baseUrl = 'https://api.github.com/repos/';
+		this.#http.baseUrl = 'https://api.github.com/repos/';
 
-		return this.http
+		return this.#http
 			.fetch(`${owner}/${repo}/languages`)
 			.then((response) => response.json())
 			.catch(() => {});
@@ -113,9 +113,9 @@ export class Rest {
 	public async getWeatherCurrentGeosearch(key: string, params: string) {
 		const url = `?key=${key}&city=${params}`;
 
-		this.http.baseUrl = 'http://api.weatherbit.io/v2.0/current';
+		this.#http.baseUrl = 'http://api.weatherbit.io/v2.0/current';
 
-		return (await this.http
+		return (await this.#http
 			.fetch(url)
 			.then((response) => {
 				if (response.status === 200) {
@@ -125,7 +125,7 @@ export class Rest {
 			})
 			.catch((error) => {
 				console.error(error);
-				if (error instanceof Response) {
+				if (error instanceof Response && error.body) {
 					error.body
 						.getReader()
 						.read()

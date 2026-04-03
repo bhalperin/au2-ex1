@@ -1,16 +1,30 @@
 {
 	"compilerOptions": {
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"skipLibCheck": true,
 		"target": "es2022",
 		"esModuleInterop": true,
 		"resolveJsonModule": true,
 		"sourceMap": true,
-		"module": "ESNext",
-		"baseUrl": ".",
+		"module": "esnext",
+		"strict": true,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"allowUnusedLabels": false,
+		"noUncheckedSideEffectImports": true,
+		"noFallthroughCasesInSwitch": true,
+		"allowUnreachableCode": false,
+		"noUncheckedIndexedAccess": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"erasableSyntaxOnly": true,
+		"noImplicitOverride": true,
+		"noErrorTruncation": true,
+		"exactOptionalPropertyTypes": false,
+		"allowJs": true,
 		"paths": {
-			"@/*": ["src/*"]
-		}
+			"@/*": ["./src/*"]
+		},
+		"types": ["node", "@types/google.maps", "@types/jest"]
 	},
 	"include": ["test", "e2e", "src"],
 	"files": ["src/resource.d.ts"]

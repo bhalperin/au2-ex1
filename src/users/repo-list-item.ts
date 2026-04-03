@@ -4,42 +4,50 @@ import { RepoContributor, UserData, UserRepo } from './users.model';
 
 @inject(Rest)
 export class RepoListItem {
-	@bindable user: UserData;
-	@bindable repo: UserRepo;
-	parentRepo: UserRepo;
-	contributors: RepoContributor[];
+	#rest: Rest;
+	@bindable user!: UserData;
+	@bindable repo!: UserRepo;
+	parentRepo: UserRepo | undefined;
+	contributors = [] as RepoContributor[];
 	languages: string | undefined;
 	sortedLanguages = [] as [string, number][];
 	totalLanguages = 0;
-	collapse: HTMLElement;
+	collapse!: HTMLElement;
 
-	constructor(private rest: Rest) {}
+	constructor(rest: Rest) {
+		this.#rest = rest;
+	}
 
-	attached(): void {
+	attached() {
 		this.collapse.addEventListener('show.bs.collapse', () => {
 			if (this.languages === undefined) {
 				this.getRepo();
 				this.getContributors();
 				this.getLanguages();
 			}
-		})
+		});
 	}
 
-	async getRepo(): Promise<void> {
-		const repo = await this.rest.getRepo(this.repo.owner.login, this.repo.name);
+	async getRepo() {
+		const repo = await this.#rest.getRepo(this.repo.owner.login, this.repo.name);
 
 		this.parentRepo = repo.parent;
 	}
 
-	async getContributors(): Promise<void> {
-		this.contributors = (await this.rest.getRepoContributors(this.repo.owner.login, this.repo.name)).filter(c => c.login !== this.repo.owner.login);
+	async getContributors() {
+		this.contributors = (await this.#rest.getRepoContributors(this.repo.owner.login, this.repo.name)).filter(
+			(c) => c.login !== this.repo.owner.login
+		);
 	}
 
-	async getLanguages(): Promise<void> {
-		const languagesResponse = await this.rest.getRepoLanguages(this.repo.owner.login, this.repo.name);
+	async getLanguages() {
+		const languagesResponse = await this.#rest.getRepoLanguages(this.repo.owner.login, this.repo.name);
 
 		this.sortedLanguages = Object.entries(languagesResponse).sort((a, b) => b[1] - a[1]);
 		this.totalLanguages = Object.values(languagesResponse).reduce((acc, current) => acc + current, 0);
-		this.languages = Object.keys(languagesResponse).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())).join(', ') || 'N/A';
+		this.languages =
+			Object.keys(languagesResponse)
+				.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+				.join(', ') || 'N/A';
 	}
 }

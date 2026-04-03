@@ -1,6 +1,6 @@
 export class MapOptions {
-	public address: string;
-	public zoom: number;
-	public lat: number;
-	public lon: number;
+	public address = '';
+	public zoom = 12;
+	public lat = 0;
+	public lon = 0;
 }

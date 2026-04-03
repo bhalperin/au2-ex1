@@ -33,7 +33,7 @@ module.exports = function (env, { analyze }) {
 		},
 		resolve: {
 			extensions: ['.ts', '.js'],
-			modules: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'dev-app'), 'node_modules'],
+			modules: [path.resolve(__dirname, 'src'), 'node_modules'],
 			alias: production
 				? {
 						// add your production aliasing here
@@ -62,7 +62,7 @@ module.exports = function (env, { analyze }) {
 							{
 								aurelia: path.resolve(__dirname, 'node_modules/aurelia/dist/esm/index.dev.mjs'),
 								// add your development aliasing here
-							},
+							}
 						),
 					},
 		},
@@ -70,6 +70,7 @@ module.exports = function (env, { analyze }) {
 			historyApiFallback: true,
 			open: !process.env.CI,
 			port: 7000,
+			watchFiles: ['src/**/*', 'e2e/**/*'],
 		},
 		module: {
 			rules: [
@@ -107,6 +108,10 @@ module.exports = function (env, { analyze }) {
 							loader: 'sass-loader',
 							options: {
 								sourceMap: true,
+								sassOptions: {
+									quietDeps: true,
+									silenceDeprecations: ['import'],
+								},
 							},
 						},
 					],
@@ -138,5 +143,8 @@ module.exports = function (env, { analyze }) {
 				'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
 			}),
 		].filter((p) => p),
+		stats: {
+			errorDetails: true,
+		},
 	};
 };
